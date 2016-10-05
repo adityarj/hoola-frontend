@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
+angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','pushFace'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -40,24 +40,14 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
 
   // Each tab has its own nav history stack:
 
-  .state('tab.login', {
-    url: '/login',
+  .state('tab.dash', {
+    url: '/dash',
     views: {
-        'tab-login': {
-            templateUrl: 'templates/tab-login.html',
-            controller: 'LoginCtrl'
-        }
-    }
-  })
-
-  .state('tab.register',{
-      url: '/register',
-      views: {
-          'register-user': {
-              templateUrl: 'templates/register-user.html',
-              controller: 'LoginCtrl'
-          }
+      'tab-dash': {
+        templateUrl: 'templates/tab-dash.html',
+        controller: 'TestCtrl'
       }
+    }
   })
 
   .state('tab.chats', {
@@ -90,6 +80,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   });
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/tab/login');
+  $urlRouterProvider.otherwise('/tab/dash');
 
 });
