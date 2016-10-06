@@ -102,6 +102,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
       }
     }
   })
+  .state('tab.flight',{
+    url: '/flight',
+    views: {
+      'flight-reservation': {
+        templateUrl: 'templates/flight.html',
+        controller: 'FlightController'
+      }
+    }
+  })
 
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/login');
