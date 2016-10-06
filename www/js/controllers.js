@@ -130,11 +130,25 @@ angular.module('starter.controllers', [])
     retrieveItems();
 })
 
+.controller('StayController', function ($scope,$http) {
+    //Replace this initialization with global scope values once completed
+    $scope.Reservation = {
+        people: 2,
+        city: 'Tokyo, Japan',
+        checkIn: '',
+        checkOut: ''
+    };
 
+    $scope.listings = [];
 
-
-
-
+    $scope.fetchHotels = function() {
+        $http.get('airbnb/api')
+            .success(function (listings) {
+                $scope.listings = listings;
+        });
+    };
+})
+ 
 .controller('ChatsCtrl', function($scope, Chats) {
     // With the new view caching in Ionic, Controllers are only called
     // when they are recreated or on app start, instead of every page change.

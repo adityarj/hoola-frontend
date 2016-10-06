@@ -1,0 +1,47 @@
+<ion-view view-title="Stay Reservation">
+  <ion-content class="padding">
+    <div>
+      <div ng-controller="StayController">
+        <div>Check in</div>
+          <md-datepicker ng-model="Reservation.checkIn" md-placeholder="Enter check in"></md-datepicker>
+        <div>Check out</div>
+          <md-datepicker ng-model="Reservation.checkOut" md-placeholder="Enter check out"></md-datepicker>
+        <div>People</div>
+          <md-button ng-disabled="true" class="md-raised md-primary">
+            {{Reservation.people}}
+          </md-button>
+        <div>City</div>
+          <md-button ng-disabled="true" class="md-raised md-primary">
+            {{Reservation.city}}
+          </md-button>
+        <md-button class="md-raised md-primary">Go!</md-button>
+        <div>
+            <md-card md-theme="dark-purple" md-theme-watch>
+              <img ng-src="http://en.parkhoteltokyo.com/wp-content/uploads/sites/44/2014/12/ParkHotelTokyo-CityQueenRoomWithTokyoTowerView4-Tokyo-1600x1000.jpg" height="500" width="300"class="md-card-image" alt="Washed Out">
+              <md-card-title>
+                <md-card-title-text>
+                  <span class="md-headline">$48</span>
+                  <span class="md-subhead">Listing name, address</span>
+                </md-card-title-text>
+              </md-card-title>
+              <md-card-actions layout="row" layout-align="end center">
+                <md-button>Book</md-button>
+              </md-card-actions>
+            </md-card>
+            <md-card md-theme="dark-purple" md-theme-watch>
+              <img ng-src="http://en.parkhoteltokyo.com/wp-content/uploads/sites/44/2014/12/ParkHotelTokyo-CityQueenRoomWithTokyoTowerView4-Tokyo-1600x1000.jpg" height="500" width="300"class="md-card-image" alt="Washed Out">
+              <md-card-title>
+                <md-card-title-text>
+                  <span class="md-headline">$32</span>
+                  <span class="md-subhead">Listing name, address</span>
+                </md-card-title-text>
+              </md-card-title>
+              <md-card-actions layout="row" layout-align="end center">
+                <md-button>Book</md-button>
+              </md-card-actions>
+            </md-card>
+        </div>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>
