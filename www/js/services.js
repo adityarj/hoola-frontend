@@ -140,6 +140,8 @@ angular.module('starter.services', [])
     };
 })
 
+
+
 //.service('queryServices',function($http){
 
 //    function adder(email,start, end, city, attributes) {

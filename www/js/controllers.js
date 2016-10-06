@@ -30,7 +30,7 @@ angular.module('starter.controllers', [])
         }), function (reject) {
             $scope.loggedIn = false
             $scope.loginMessage = "Incorrect email and/or password. Please try again"
-            $state.go('tab.dash')
+            $state.go('tab.login')
         }
     }
 
@@ -42,7 +42,7 @@ angular.module('starter.controllers', [])
         }, function (reject) {
             $scope.loggedIn = false
             $scope.loginMessage = "Please login again"
-            $state.go('tab.dash')
+            $state.go('tab.login')
         }
             )
     }
@@ -86,6 +86,29 @@ angular.module('starter.controllers', [])
     //}
 
     
+})
+
+.controller('MessageController', function ($scope,$http,Pusher) {
+    $scope.items = [];
+
+    Pusher.subscribe('my-channel','notification',function(item) {
+        $scope.items.push(item);
+    })
+
+    var retrieveItems = function() {
+        console.log('get');
+        $http.get('/api/get')
+			.success(function (items) {
+				$scope.items = items;
+			});
+    };
+
+    $scope.addItem = function(item) {
+        console.log('post');
+        $http.post('/api/post',item);
+    };
+
+    retrieveItems();
 })
 
 

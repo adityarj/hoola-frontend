@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','pushFace'])
+angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'doowb.angular-pusher'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -23,13 +23,19 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','p
   });
 })
 
-.config(function($stateProvider, $urlRouterProvider) {
+.config(function($stateProvider, $urlRouterProvider,PusherServiceProvider) {
 
+        
   // Ionic uses AngularUI Router which uses the concept of states
   // Learn more here: https://github.com/angular-ui/ui-router
   // Set up the various states which the app can be in.
   // Each state's controller can be found in controllers.js
-  $stateProvider
+    PusherServiceProvider
+    PusherServiceProvider.setToken('6ad8804a371caa2d7eeb').setOptions({
+
+    });
+        
+    $stateProvider
 
   // setup an abstract state for the tabs directive
     .state('tab', {
@@ -40,15 +46,25 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','p
 
   // Each tab has its own nav history stack:
 
-  .state('tab.dash', {
-    url: '/dash',
+  .state('tab.login', {
+    url: '/login',
     views: {
-      'tab-dash': {
-        templateUrl: 'templates/tab-dash.html',
-        controller: 'TestCtrl'
+      'tab-login': {
+        templateUrl: 'templates/tab-login.html',
+        controller: 'LoginCtrl'
       }
     }
   })
+
+    .state('tab.register', {
+        url: '/register',
+        views: {
+            'tab-register': {
+                templateUrl: 'templates/register-user.html',
+                controller: 'LoginCtrl'
+            }
+        }
+    })
 
   .state('tab.chats', {
       url: '/chats',
@@ -80,6 +96,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','p
   });
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/tab/dash');
+  $urlRouterProvider.otherwise('/tab/login');
 
 });
