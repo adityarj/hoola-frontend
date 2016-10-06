@@ -1,0 +1,21 @@
+<ion-view view-title="Login Page">
+  <ion-content class="padding">
+    <h2>Welcome to Hoola,</h2>
+    
+      <center>
+          <form class="list list-inset" ng-submit="login(loginDetails)">
+              
+              <label class="item item-input" style="border: none; border-bottom:4px solid #ebfafc; opacity:0.9;">
+                  <input type="text" placeholder="Email" ng-model="loginDetails.email">
+              </label>
+              <label class="item item-input" style="border: none; border-bottom:4px solid #ebfafc; opacity:0.9;">
+                  <input type="text" placeholder="Password" ng-model="loginDetails.password">
+              </label>
+              <button class="button button-balanced" type="submit">Login</button>
+          </form>
+
+          <button ng-click="changeTab('tab.register')" class="button button-positive">New? Sign up here</button>
+      </center>
+
+  </ion-content>
+</ion-view>

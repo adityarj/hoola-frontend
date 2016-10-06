@@ -1,12 +1,14 @@
 angular.module('starter.controllers', [])
 
-.controller('TestCtrl', function ($scope,userServices,$state,$http) {
+.controller('LoginCtrl', function ($scope,userServices,$state,$http) {
     //to be filled//
     //
+    console.log("loaded");
     $scope.loginDetails = {}
 
-    $scope.changeTab = function () {
-        $state.go('tab.chats');
+    $scope.changeTab = function (tab) {
+
+        $state.go(tab); //update this later
         
     }
 

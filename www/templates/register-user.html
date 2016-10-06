@@ -1,4 +1,4 @@
-<ion-view view-title="Login Page">
+<ion-view view-title="Register">
   <ion-content class="padding">
     <h2>Welcome to Hoola,</h2>
     
@@ -26,13 +26,12 @@
               <label class="item item-input" style="border: none; border-bottom:4px solid #ebfafc; opacity:0.9;">
                   <input type="text" placeholder="Re-enter Password" ng-model="loginDetails.password_confirmation">
               </label>
-              <label>{{success}}</label>
+              
               <button class="button button-calm" type="submit">Create new account</button>
-
 
           </form>
 
-          <button ng-click="changeTab()" class="button button-positive">Already a user? Sign in here</button>
+          <button ng-click="changeTab('tab.login')" class="button button-positive">Already a user? Sign in here</button>
       </center>
 
   </ion-content>
