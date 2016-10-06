@@ -88,25 +88,44 @@ angular.module('starter.controllers', [])
     
 })
 
-.controller('MessageController', function ($scope,$http,Pusher) {
+.controller('MessageController', function ($scope,$http) {
     $scope.items = [];
 
-    Pusher.subscribe('my-channel','notification',function(item) {
-        $scope.items.push(item);
-    })
+    var pusher = new Pusher('6ad8804a371caa2d7eeb',{
+        cluster: 'ap1',
+        encrypted: 'true'
+    });
+
+    var channel = pusher.subscribe('my-channel');
+
+    channel.bind('my_event',function(data) {
+        console.log(data);
+    });
 
     var retrieveItems = function() {
         console.log('get');
-        $http.get('/api/get')
-			.success(function (items) {
-				$scope.items = items;
-			});
+   //      $http.get('/api/get')
+			// .success(function (items) {
+			// 	$scope.items = items;
+			// });
     };
 
-    $scope.addItem = function(item) {
-        console.log('post');
-        $http.post('/api/post',item);
+    $scope.addItem = function(Message) {
+        var messagePlate = {
+            name: 'You',
+            message: Message
+        };
+        $http.post('/api/post',Message);
+        $scope.items.push(messagePlate);
+        $scope.Message = null;
     };
+
+    $scope.triggerInputHandler = function(Message) {
+        if (Message == '@hoola') {
+            //Trigger api.ai 
+            $scope.Message = Message+' ';
+        }
+    }
 
     retrieveItems();
 })

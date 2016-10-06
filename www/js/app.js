@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'doowb.angular-pusher'])
+angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -23,17 +23,14 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
   });
 })
 
-.config(function($stateProvider, $urlRouterProvider,PusherServiceProvider) {
+.config(function($stateProvider, $urlRouterProvider) {
 
         
   // Ionic uses AngularUI Router which uses the concept of states
   // Learn more here: https://github.com/angular-ui/ui-router
   // Set up the various states which the app can be in.
   // Each state's controller can be found in controllers.js
-    PusherServiceProvider
-    PusherServiceProvider.setToken('6ad8804a371caa2d7eeb').setOptions({
-
-    });
+   
         
     $stateProvider
 
@@ -91,6 +88,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       'tab-account': {
         templateUrl: 'templates/tab-account.html',
         controller: 'AccountCtrl'
+      }
+    }
+  })
+  .state('tab.pusher',{
+    url: '/chat',
+    views: {
+      'tab-pusher': {
+        templateUrl: 'templates/pusher.html',
+        controller: 'MessageController'
       }
     }
   });
