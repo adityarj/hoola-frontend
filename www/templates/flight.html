@@ -1,5 +1,42 @@
 <ion-view view-title="Stay Reservation">
   <ion-content class="padding">
-    JUST AMAZING BALLS
+    <div>
+      <div ng-controller="FlightController">
+          <md-datepicker ng-model="Reservation.checkIn" md-placeholder="Onward"></md-datepicker>
+          <md-datepicker ng-model="Reservation.checkOut" md-placeholder="Return" md-min-date="Reservation.checkIn"></md-datepicker>
+        <div>People</div>
+          <md-button ng-disabled="true" class="md-raised md-primary">
+            {{Reservation.people}}
+          </md-button>
+        <div>Origin</div>
+          <md-button ng-disabled="true" class="md-raised md-primary">
+            {{Reservation.origin}}
+          </md-button>  
+        <div>Destination</div>
+          <md-button ng-disabled="true" class="md-raised md-primary">
+            {{Reservation.destination}}
+          </md-button>
+
+        <md-button class="md-raised md-primary" ng-disabled={{disabledStatus}} ng-click="fetchHotels(Reservation)">Go!</md-button>
+        <div>
+            <md-card md-theme="dark-orange" md-theme-watch>
+              <img ng-src="">
+              <md-card-title>
+                <md-card-title-text>
+                  <span class="md-headline">$392</span>
+                  <span class="md-subhead">
+                     TZ322 <br>
+                     Depart 0955 Arrive 1605 <br>
+                     Singapore to Tokyo (Narita), 7h 55min | 0 stops
+                  </span>
+                </md-card-title-text>
+              </md-card-title>
+              <md-card-actions layout="row" layout-align="end center">
+                <md-button>Book</md-button>
+              </md-card-actions>
+            </md-card>
+        </div>
+      </div>
+    </div>
   </ion-content>
 </ion-view>

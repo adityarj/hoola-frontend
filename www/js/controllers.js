@@ -169,7 +169,29 @@ angular.module('starter.controllers', [])
 })
 
 .controller('FlightController',function($scope,$http) {
-    
+    $scope.disabledStatus = false;
+
+    $scope.Reservation = {
+        people: 2,
+        origin: 'Singapore',
+        destination: 'Tokyo, Japan',
+        checkIn: '',
+        checkOut: ''
+    };
+
+    $scope.listings = [];
+
+    $scope.fetchFlights = function() {
+        $http.get('//')
+            .success(function(listings) {
+                $scope.disabledStatus = true;
+                console.log(listings);
+            });
+    };
+
+    $scope.bookFlight = function() {
+        //I will finalize flight and send to server, then update it back
+    };
 })
  
 .controller('ChatsCtrl', function($scope, Chats) {
