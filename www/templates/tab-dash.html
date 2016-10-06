@@ -6,17 +6,29 @@
           <form class="list list-inset" ng-submit="newUser(loginDetails)">
               
               <label class="item item-input" style="border: none; border-bottom:4px solid #ebfafc; opacity:0.9;">
-                  <input type="text" placeholder="Name" ng-model="loginDetails.name">
+                  <input type="text" placeholder="Username" ng-model="loginDetails.username">
+              </label>
+              <label class="item item-input" style="border: none; border-bottom:4px solid #ebfafc; opacity:0.9;">
+                  <input type="text" placeholder="First Name" ng-model="loginDetails.first_name">
+              </label>
+              <label class="item item-input" style="border: none; border-bottom:4px solid #ebfafc; opacity:0.9;">
+                  <input type="text" placeholder="Last Name" ng-model="loginDetails.last_name">
+              </label>
+              <label class="item item-input" style="border: none; border-bottom:4px solid #ebfafc; opacity:0.9;">
+                  <input type="text" placeholder="City" ng-model="loginDetails.city">
+              </label>
+              <label class="item item-input" style="border: none; border-bottom:4px solid #ebfafc; opacity:0.9;">
+                  <input type="text" placeholder="Email" ng-model="loginDetails.email">
               </label>
               <label class="item item-input" style="border: none; border-bottom:4px solid #ebfafc; opacity:0.9;">
                   <input type="text" placeholder="Password" ng-model="loginDetails.password">
               </label>
               <label class="item item-input" style="border: none; border-bottom:4px solid #ebfafc; opacity:0.9;">
-                  <input type="text" placeholder="Email" ng-model="loginDetails.email">
+                  <input type="text" placeholder="Re-enter Password" ng-model="loginDetails.password_confirmation">
               </label>
               <label>{{success}}</label>
               <button class="button button-calm" type="submit">Create new account</button>
-              
+
 
           </form>
 

@@ -1,35 +1,52 @@
 angular.module('starter.controllers', [])
 
-.controller('TestCtrl', function ($scope,queryServices,userServices,$state,$http) {
+.controller('TestCtrl', function ($scope,userServices,$state,$http) {
     //to be filled//
+    //
     $scope.loginDetails = {}
 
     $scope.changeTab = function () {
         $state.go('tab.chats');
-        console.log("this button working tho")
+        
     }
 
-    $scope.newUser = function (loginDetails) {
-        console.log("initial");
-        userServices.newUser(loginDetails.name, loginDetails.password, loginDetails.email)
+    $scope.newUser = function (loginDetails) { //tbd
+        
+        userServices.newUser(loginDetails)
             .then(function(result){
                 $scope.success = "You have successfully created a new account!"
                 $scope.loginDetails = {}
-                console.log("hello");
+          
             })
-
     }
 
-    $scope.login = function (email, password) {
-        userServices.login(email, password)
+    $scope.login = function (loginDetails) { //requires email and password, demand a login!
+        userServices.login(loginDetails)
         .then(function (result) {
-            $scope.loggedIn = true //Find out what result you're getting before finalising this function
+            $scope.loggedIn = true
             $scope.loginMessage = "You have successfully logged in!"
-        })
+        }), function (reject) {
+            $scope.loggedIn = false
+            $scope.loginMessage = "Incorrect email and/or password. Please try again"
+            $state.go('tab.dash')
+        }
     }
 
-    $scope.logout = function (email) {
-        userServices.logout(email)
+    $scope.returnVisit = function (loginDetails) { //requires id and auth_token
+        userServices.validateUser(loginDetails)
+        .then(function (success){
+            $scope.loggedIn = true
+            $scope.loginMessage = "Welcome back"
+        }, function (reject) {
+            $scope.loggedIn = false
+            $scope.loginMessage = "Please login again"
+            $state.go('tab.dash')
+        }
+            )
+    }
+
+    $scope.logout = function (loginDetails) { //accesstoken, uid, client , figure out how to store these values client-side.
+        userServices.logout(loginDetails)
         .then(function (result) {
             $scope.loggedIn = false
             $scope.logoutMessage = "You have successfully logged out!"
@@ -37,37 +54,39 @@ angular.module('starter.controllers', [])
     }
 
 
-    $scope.adder = function (email,start, end, city, attributes) {
-        queryServices.adder(email,start, end, city, attributes)
-        .then(function (result) {
-            $scope.addMessage = "Successfully added listing!"
-            //what do I do with this?
-        })
-    }
+    //$scope.adder = function (email,start, end, city, attributes) {
+    //    queryServices.adder(email,start, end, city, attributes)
+    //    .then(function (result) {
+    //        $scope.addMessage = "Successfully added listing!"
+    //        //what do I do with this?
+    //    })
+    //}
 
-    $scope.deleter = function (email) {
-        queryServices.deleter(email)
-        .then(function (result) {
-            $scope.deleteMessage = "Successfully deleted your listing"
-        })
-    }
+    //$scope.deleter = function (email) {
+    //    queryServices.deleter(email)
+    //    .then(function (result) {
+    //        $scope.deleteMessage = "Successfully deleted your listing"
+    //    })
+    //}
 
-    $scope.fetcher = function () {
-        queryServices.fetcher()
-        .then(function (result) {
-            $scope.fetchMessage = "Successfully fetched data!"
-        })
-    }
+    //$scope.fetcher = function () {
+    //    queryServices.fetcher()
+    //    .then(function (result) {
+    //        $scope.fetchMessage = "Successfully fetched data!"
+    //    })
+    //}
 
-    $scope.similarer = function (city) {
-        queryServices.similarer(city)
-        .then(function (result) {
-            $scope.similarMessage = "Similar cities found!"
-        })
-    }
+    //$scope.similarer = function (city) {
+    //    queryServices.similarer(city)
+    //    .then(function (result) {
+    //        $scope.similarMessage = "Similar cities found!"
+    //    })
+    //}
 
     
 })
+
+
 
 
 

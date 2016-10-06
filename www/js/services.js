@@ -50,82 +50,134 @@ angular.module('starter.services', [])
 })
 
 .service('userServices',function($http){
-    var herokuUrl = "http://hoola-sutd.herokuapp.com/api/user/";
-    var localHost = "http://localhost:8100/user";
-    function newUser(name,password,email) {
+    var herokuUrl = "http://hoola-rails.herokuapp.com/api/v1/auth/"; //use this on mobile device
+    var localHost = "http://localhost:1337/hoola-rails.herokuapp.com/api/v1/auth/"; //use this url when developing
+
+    function newUser(loginDetails) {
         return $http({
-            method: 'GET',
-            url: 'http://hoola-sutd.herokuapp.com/api/user/new',
+            method: 'POST',
+            url: localHost,
             data: {
-                name: name,
-                password: password,
-                email: email
+                username: loginDetails.username,
+                
+                first_name: loginDetails.first_name,
+                last_name: loginDetails.last_name,
+                city: loginDetails.city,
+                email: loginDetails.email,
+                password: loginDetails.password,
+                password_confirmation:loginDetails.password_confirmation
+
             }
         })
     }
 
-    function login(email, password) {
+    function deleteUser(loginDetails) { //kiv
         return $http({
-            method: 'GET',
-            url: 'http://hoola-sutd.herokuapp.com/api/user/login',
+            method: 'DELETE',
+            url: localHost,
             data: {
-                email: email,
-                password: password
+                id: loginDetails.id,
+                auth_token: loginDetails.auth_token
+            }
+        })
+    }
+
+    function updateUser(updateInfo) {
+        return $http({
+            method: 'PUT',
+            url: localHost,
+            data: {
+                password: updateInfo.password,
+                password_confirmation: updateInfo.password_confirmation,
+                //what do i put here if it's supposed to take any update?!
+            }
+        })
+    }
+
+    function login(loginDetails) { //both validate and login receive a header which have lots of data inside to be stored. Take note!
+        return $http({
+            method: 'POST',
+            url: localHost + 'sign_in',
+            data: {
+                email: loginDetails.email,
+                password: loginDetails.password
                 //will get true response
             }
         })
         //probably add .then(result) { ...} and set login parameter to true
     }
 
-    function logout(email) {
-        return $http.get('http://hoola-sutd.herokuapp.com/api/user/logout', email);
+    function logout(loginDetails) {
+        return $http({
+            method: 'DELETE',
+            url: localHost + 'sign_out',
+            data: {
+                access_token: loginDetails.access_token, //... can't put access-token, had to use underscore. Don't know if will bug.
+                uid: loginDetails.uid, //technically on the database, uid and email have different fields but they actually have the same value of the user's email.
+                client: loginDetails.client
+            }
+        })
+    }
+
+    function validateUser(loginDetails) { //used on return visit to app.
+        return $http({
+            method: 'GET',
+            url: localHost + 'validate_token',
+            data: {
+                id: loginDetails.id,
+                auth_token: loginDetails.auth_token
+            }
+        })
     }
 
     return {
         newUser: newUser,
+        deleteUser: deleteUser,
+        updateUser: updateUser,
+        validateUser: validateUser,
         login: login,
         logout: logout
     };
 })
 
-.service('queryServices',function($http){
+//.service('queryServices',function($http){
 
-    function adder(email,start, end, city, attributes) {
-        return $http({
-            method: 'POST',
-            url: 'http://hoola-sutd.herokuapp.com/api/query/add',
-            data: {
-                email: email,
-                start: start,
-                end: end,
-                city: city,
-                attributes: attributes
-            }
-        })
-    }
+//    function adder(email,start, end, city, attributes) {
+//        return $http({
+//            method: 'POST',
+//            url: 'http://hoola-sutd.herokuapp.com/api/query/add',
+//            data: {
+//                email: email,
+//                start: start,
+//                end: end,
+//                city: city,
+//                attributes: attributes
+//            }
+//        })
+//    }
 
-    function deleter(email) {
-        return $http.delete('http://hoola-sutd.herokuapp.com/api/query/delete',email);
-        //each user can only have 1 listing.
-    }
+//    function deleter(email) {
+//        return $http.delete('http://hoola-sutd.herokuapp.com/api/query/delete',email);
+//        //each user can only have 1 listing.
+//    }
 
-    function fetcher() {
-        return $http.get('http://hoola-sutd.herokuapp.com/api/query/fetch',email);
-    }
+//    function fetcher() {
+//        return $http.get('http://hoola-sutd.herokuapp.com/api/query/fetch',email);
+//    }
     
 
-    function similarer(city) {
-        return $http.get('http://hoola-sutd.herokuapp.com/api/query/similar', city);
+//    function similarer(city) {
+//        return $http.get('http://hoola-sutd.herokuapp.com/api/query/similar', city);
         
-    }
+//    }
 
-    return {
-        adder: adder,
-        deleter: deleter,
-        fetcher: fetcher,
-        similarer: similarer
-    }
-})
+//    return {
+//        adder: adder,
+//        deleter: deleter,
+//        fetcher: fetcher,
+//        similarer: similarer
+//    }
+//})
 
 //.service("pusherService", function () {
 //    var pusher = new Pusher("254721");
