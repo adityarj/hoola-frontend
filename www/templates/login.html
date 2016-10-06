@@ -1,22 +1,29 @@
 <ion-view view-title="Login Page">
   <ion-content class="padding">
-    <h2>Welcome to Hoola,</h2>
+    <h2>Hoola</h2>
     
       <center>
 
           <form class="list list-inset" ng-submit="login(loginDetails)">
 
-              
-              <label class="item item-input" style="border: none; border-bottom:4px solid #ebfafc; opacity:0.9;">
-                  <input type="text" placeholder="Email" ng-model="loginDetails.email">
-              </label>
-              <label class="item item-input" style="border: none; border-bottom:4px solid #ebfafc; opacity:0.9;">
-                  <input type="password" placeholder="Password" ng-model="loginDetails.password">
-              </label>
-              <button class="button button-balanced" type="submit">Login</button>
+              <md-content md-theme="docs-dark" layout-gt-sm="row" layout-padding>
+              <div>
+                <md-input-container>
+                  <label>Email</label>
+                  <input ng-model="loginDetails.email">
+                </md-input-container>
+
+                <md-input-container>
+                  <label>Password</label>
+                  <input ng-model="loginDetails.password"type="email">
+                </md-input-container>
+              </div>
+            </md-content>
+              <md-button class="md-primary md-inkripple md-raised" md-colors="{background: 'light-green'}">Login</md-button>
           </form>
 
-          <button ng-click="changeTab('tab.register')" class="button button-positive">New? Sign up here</button>
+              <md-button class="md-primary md-inkripple md-raised" md-colors="{background: 'lime'}" ng-click="changeTab('tab.register')" >New? Sign Up
+              </md-button>
       </center>
       {{loginMessage}}
   </ion-content>
