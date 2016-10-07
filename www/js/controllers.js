@@ -145,8 +145,11 @@ angular.module('starter.controllers', [])
 
 
 .controller('MessageController', function ($scope,$http,$rootScope) {
+
     $scope.items = [];
+    $scope.MessageNew = '';
     $scope.showCalculator = false;
+    $scope.apiListen = false;
     var pusher = new Pusher('6e940f018f1b0b662664',{
         encrypted: 'true'
     });
@@ -171,17 +174,34 @@ angular.module('starter.controllers', [])
             var messagePlate = {
                 channel: 'public-chat',
                 message: {
-                    author: 'Kevin Tan',//$rootScope.data.first_name +' '+ $rootScope.data.last_name,
+                    author: $rootScope.data.first_name +' '+ $rootScope.data.last_name,
                     text: $scope.BalanceTab.amount+'/'+$scope.BalanceTab.activity,
                     type: 'Calculator'
                 }
             }
-        } else {
+        } else if ($scope.apiListen) {
+            var ApiMessage = Message.split("@hoola ");
+            console.log('ApiMessage');
+            $http({
+                method: 'POST',
+                url: 'https://api.api.ai/v1/query',
+                dataType: "json",
+                headers: {
+                    "Authorization": "Bearer " + 'efe23b7ed7374939a38ac9f3f81cc83b'
+                },
+                data: JSON.stringify({q: JSON.stringify(ApiMessage[0]), lang: "en"}),
+                success: function(data) {
+                    console.log('asfasfasf');
+                }
+            });
+
+        }
+        else {
             var messagePlate = {
                 channel: 'public-chat',
                 message: {
-                    author: 'John Smith',
-                    text: $scope.Message,
+                    author: 'Kevin Tan',
+                    text: $rootScope.data.first_name +' '+ $rootScope.data.last_name,
                     type: 'Message'
                 }
             };
@@ -191,12 +211,14 @@ angular.module('starter.controllers', [])
             $http.post('http://hoola-rails.herokuapp.com/api/v1/chats',angular.toJson(messagePlate, true));
         }
         $scope.Message = null;
+        $scope.apiListen = false;
         $scope.showCalculator = false;
     };
 
     $scope.triggerInputHandler = function(Message) {
+
         if (Message == '@hoola') {
-            //Trigger api.ai 
+            $scope.apiListen = true;
             $scope.Message = Message+' ';
         } else if (Message == '@money') {
             $scope.showCalculator = true;
@@ -209,13 +231,13 @@ angular.module('starter.controllers', [])
     retrieveItems();
 })
 
-.controller('StayController', function ($scope,$http) {
+.controller('StayController', function ($scope,$http,$rootScope) {
     //Replace this initialization with global scope values once completed
     $scope.disabledStatus = false;
     $scope.hotelBookingDetails.id = $rootScope.listingID
     $scope.Reservation = {
         people: 2,
-        city: 'Tokyo',
+        city: $rootScope.data.city,
         checkIn: '',
         checkOut: ''
     };
@@ -406,6 +428,7 @@ angular.module('starter.controllers', [])
         Chats.remove(chat);
     };
 })
+
 
 .controller('ChatDetailCtrl', function ($scope, $stateParams, Chats) {
     $scope.chat = Chats.get($stateParams.chatId);
