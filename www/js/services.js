@@ -111,7 +111,7 @@ angular.module('starter.services', [])
             method: 'DELETE',
             url: localHost + 'sign_out',
             data: {
-                access_token: loginDetails.access_token, //... can't put access-token, had to use underscore. Don't know if will bug.
+                "access-token": loginDetails.access-token, //... can't put access-token, had to use underscore. Don't know if will bug.
                 uid: loginDetails.uid, //technically on the database, uid and email have different fields but they actually have the same value of the user's email.
                 client: loginDetails.client
             }
@@ -124,7 +124,8 @@ angular.module('starter.services', [])
             url: localHost + 'validate_token',
             data: {
                 id: loginDetails.id,
-                auth_token: loginDetails.auth_token
+                "access-token": loginDetails.access-token
+
             }
         })
     }
@@ -140,28 +141,66 @@ angular.module('starter.services', [])
 })
 
 
-.service('flightBookingServices', function ($http) { //waiting for api
-    
-    getFlight = function(id){
+.service('listingServices', function ($http) { //waiting for api
+    var localHost2 = "http://localhost:1337/hoola-rails.herokuapp.com/api/v1/listings/" //flight booking prototyping url
+    getAllListings = function(){  //index
         return $http({
             method: 'GET',
-            url: what,
+            url: localHost2,
+            data: {}
+        })
+    }
+
+
+    
+    getListing = function(id){
+        return $http({
+            method: 'GET',
+            url: localHost2 + id,
             data: {
-                id: id
+                //check
             }
         })
     }
-    
-    bookFlight = function(email,password){
+
+    createListing = function (listingDetails) { //will get object json if successful, error description if error.
         return $http({
-            method: 'GET',
-            url: localHost + 'validate_token',
+            method: 'POST',
+            url: localHost2,
             data: {
-                email:email,
-                password:password
+                title: listingDetails.title,
+                destination: listingDetails.destination,
+                description: listingDetails.description,
+                departure: listingDetails.Date, //help with this pleaseee? Not sure if date format is correct.
+                user_id: listingDetails.id
             }
         })
-    } 
+    }
+
+    updateListing = function (listingDetails) { //will get object json if successful, error description if error.
+        return $http({
+            method: 'PUT',
+            url: localHost2,
+            data: {
+                title: listingDetails.title,
+                destination: listingDetails.destination,
+                description: listingDetails.description,
+                departure: listingDetails.Date, //help with this pleaseee? Not sure if date format is correct.
+                user_id: listingDetails.id
+            }
+        })
+    }
+
+    deleteListing = function (listingDetails) {
+        return $http({
+            method: 'DELETE',
+            url: localHost2 + id,
+            data: {
+                //check
+            }
+        })
+        //will get object json if successful, error description if error.
+    }
     
     
     })

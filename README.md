@@ -79,3 +79,43 @@ Cache-Control: max-age=0, private, must-revalidate
 X-Request-Id: 6300e3b9-bf7d-4e10-a8bf-8cda66cf15d7
 X-Runtime: 0.394717
 Transfer-Encoding: chunked
+
+INDEX
+
+This action returns EVERY SINGLE listing that has been created, to get it just submit a GET request to http://localhost:3000/api/v1/listings
+
+response:
+
+[{"id":1,"title":"lala","status":"initial","destination":"wherever","description":"just a lala","departure":"-4712-01-01","user_id":1},{"id":2,"title":"not lala","status":"initial","destination":"wherever not","description":"nononon just a lala","departure":"-4712-01-01","user_id":1}]
+GET
+
+This action returns single listing, method: GET params to http://localhost:3000/api/v1/listings/{id}:
+
+response:
+
+{"id":1,"title":"lala","status":"initial","destination":"wherever","description":"just a lala","departure":"-4712-01-01","user_id":1}
+CREATE
+
+This action creates a listing, method: POST to http://localhost:3000/api/v1/listings.
+
+Sample JSON params:
+
+{title: "lala", destination: "wherever", description: "just a lala", departure: Date.new, user_id: 1}
+response will return the object JSON when it's successfull and `{ errors: "error description" } when it fails
+
+UPDATE
+
+This action creates a listing, method: PUT to http://localhost:3000/api/v1/listings/{id}.
+
+Sample JSON params:
+
+{title: "lala", destination: "wherever", description: "just a lala", departure: Date.new, user_id: 1}
+response will return the object JSON when it's successfull and `{ errors: "error description" } when it fails
+
+DESTROY
+
+This action will delete a listing, method: DELETE to http://localhost:3000/api/v1/listings/{id}.
+
+response:
+
+{success: "true"} when successful and {error : "error message"} when not

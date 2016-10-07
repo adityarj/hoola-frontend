@@ -8,54 +8,66 @@
 angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','ngMaterial'])
 
 .run(function($ionicPlatform) {
-  $ionicPlatform.ready(function() {
-    // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-    // for form inputs)
-    if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
-      cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-      cordova.plugins.Keyboard.disableScroll(true);
+    $ionicPlatform.ready(function() {
+        // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
+        // for form inputs)
+        if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
+            cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+            cordova.plugins.Keyboard.disableScroll(true);
 
-    }
-    if (window.StatusBar) {
-      // org.apache.cordova.statusbar required
-      StatusBar.styleDefault();
-    }
-  });
+        }
+        if (window.StatusBar) {
+            // org.apache.cordova.statusbar required
+            StatusBar.styleDefault();
+        }
+    });
 })
 
 .config(function($stateProvider, $urlRouterProvider,$mdThemingProvider) {
 
         
-  // Ionic uses AngularUI Router which uses the concept of states
-  // Learn more here: https://github.com/angular-ui/ui-router
-  // Set up the various states which the app can be in.
-  // Each state's controller can be found in controllers.js
+    // Ionic uses AngularUI Router which uses the concept of states
+    // Learn more here: https://github.com/angular-ui/ui-router
+    // Set up the various states which the app can be in.
+    // Each state's controller can be found in controllers.js
    
+
   $mdThemingProvider.theme('dark-purple').backgroundPalette('deep-purple').dark();
   $mdThemingProvider.theme('dark-orange').backgroundPalette('deep-orange').dark();
+
 
     $stateProvider
 
   // setup an abstract state for the tabs directive
     .state('tab', {
-    url: '/tab',
-    abstract: true,
-    templateUrl: 'templates/tabs.html'
-  })
+        url: '/tab',
+        abstract: true,
+        templateUrl: 'templates/tabs.html'
+    })
 
   // Each tab has its own nav history stack:
 
   .state('login', {
-    url: '/login',
-        templateUrl: 'templates/login.html',
-        controller: 'LoginCtrl'
+      url: '/login',
+      templateUrl: 'templates/login.html',
+      controller: 'LoginCtrl'
   })
 
     .state('register', {
         url: '/register',
-            templateUrl: 'templates/register.html',
-            controller: 'LoginCtrl'
-    })
+        templateUrl: 'templates/register.html',
+        controller: 'LoginCtrl'
+  })
+
+  .state('tab.listings',{
+      url: '/listings',
+      views: {
+          'tab-listings': {
+              templateUrl: 'templates/tab-listings.html',
+              controller: 'ListingsCtrl'
+          }
+      }
+  })
 
   .state('tab.chats', {
       url: '/chats',

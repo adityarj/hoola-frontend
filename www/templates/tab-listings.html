@@ -8,18 +8,12 @@
 <ion-view view-title="Listings">
   <ion-content class="padding">
     <div>
-      <div ng-controller="MessageController">
-        <div ng-repeat="message in items">
-          {{message.name}} <br>
-          {{message.message}}
+      <div ng-controller="ListingsCtrl">
+        <div ng-repeat="listing in ListofListings">
+          {{listing.city}} 
+          {{listing.personName}}
         </div>
-        <form name="chatForm" ng-submit="addItem(Message)">
-            <input type="text" name="chat_box" ng-model="Message" ng-change="triggerInputHandler(Message)">
-            <input type="submit" value="Send" >
-        </form>
       </div>
-      
-      
     </div>
   </ion-content>
 </ion-view>

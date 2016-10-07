@@ -34,7 +34,7 @@ angular.module('starter.controllers', [])
         userServices.login(loginDetails)
         .then(function(response) {
         console.log('Content-Range: ' + response.headers('Content-Range'));
-        console.log(response.data);
+        console.log(response.headers());
         $state.go('tab.chats') //to be edited later for main page.
         $scope.loggedIn = true
                     
@@ -65,6 +65,7 @@ angular.module('starter.controllers', [])
             $scope.logoutMessage = "You have successfully logged out!"
         })
     }
+
 
 
     //$scope.adder = function (email,start, end, city, attributes) {
@@ -98,6 +99,14 @@ angular.module('starter.controllers', [])
 
     
 })
+
+.controller('listingsCtrl', function () {
+    $scope.ListofListings = {}
+
+    
+
+})
+
 
 .controller('MessageController', function ($scope,$http) {
     $scope.items = [];
