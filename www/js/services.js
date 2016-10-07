@@ -58,8 +58,7 @@ angular.module('starter.services', [])
             method: 'POST',
             url: localHost,
             data: {
-                username: loginDetails.username,
-                
+                username: loginDetails.username,                
                 first_name: loginDetails.first_name,
                 last_name: loginDetails.last_name,
                 city: loginDetails.city,

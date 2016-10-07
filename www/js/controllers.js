@@ -18,27 +18,26 @@ angular.module('starter.controllers', [])
             .then(function(result){
                 $scope.success = "You have successfully created a new account!"
                 $scope.loginDetails = {}
-          
-            })
+                $state.go('login')
+            }), function (reject) {
+                $scope.success = "Please register again, one or more fields are incorrectly filled"
+            }
     }
 
 
     //success: function(data, textStatus, xhr) {
-  //  console.log(data);
-   // console.log(xhr.getResponseHeader("Content-Length"));
+    //console.log(data);
+    // console.log(xhr.getResponseHeader("Content-Length"));
 
 
     $scope.login = function (loginDetails) { //requires email and password, demand a login!
         userServices.login(loginDetails)
         .then(function(response) {
         console.log('Content-Range: ' + response.headers('Content-Range'));
-        console.log( response.data);
-        //.then(function (data,xhr) {
-        //    $scope.loggedIn = true
-        //    $scope.loginMessage = "You have successfully logged in!"
-        //    console.log(xhr);
-        //    console.log(xhr.getResponseHeader("Content-Length"));
-            
+        console.log(response.data);
+        $state.go('tab.chats') //to be edited later for main page.
+        $scope.loggedIn = true
+                    
         }), function (reject) {
             $scope.loggedIn = false
             $scope.loginMessage = "Incorrect email and/or password. Please try again"
