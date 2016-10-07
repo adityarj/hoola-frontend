@@ -107,3 +107,31 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 .chat-message-text {
 	float: right;
 }
+
+.chat-box-tab-self {
+	background-color: #BCF5BC;
+	border-radius: 10px 10px 10px 10px;
+	-moz-border-radius: 10px 10px 10px 10px;
+	-webkit-border-radius: 10px 10px 10px 10px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	span {
+		font-weight: 700;
+		color: grey;
+		margin-bottom: 2px;
+	}
+}
+
+.chat-box-tab-self {
+	background-color: #BCF5F5;
+	border-radius: 10px 10px 10px 10px;
+	-moz-border-radius: 10px 10px 10px 10px;
+	-webkit-border-radius: 10px 10px 10px 10px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	span {
+		font-weight: 700;
+		color: grey;
+		margin-bottom: 2px;
+	}
+}

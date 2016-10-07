@@ -12,22 +12,40 @@
         <div ng-repeat="message in items">
           <div class="container">
             <div class="row" style="width: 100%;">
-              <div class="col-sm-8" style="width: 50%">
-              asafas               
+
+              <div class="col-sm-6 chat-box-tab-other"  style="width: 50%">
+                <div ng-if="message.author != 'Kevin Tan'">
+                  <span class="chat-message-author" style="float: right;">{{message.author}}</span> <br>
+                  <div ng-if="message.type == 'Calculator'">
+                    <div ng-if="+message.text.split('/')[0] < 0">
+                      owes ${{message.text.split('/')[0]}} for {{message.text.split('/')[1]}}
+                    </div>
+                    <div ng-if="+message.text.split('/')[0] >= 0">
+                      lent ${{message.text.split('/')[0]}} for {{message.text.split('/')[1]}}
+                    </div>
+                  </div>
+                  <div ng-if="message.type == 'Message'" class="chat-message-text">
+                    {{message.text}}
+                  </div>      
+                </div>  
               </div>
-              <div class="col-sm-6" style="width: 50%">
-                <span class="chat-message-author" style="float: right;">{{message.author}}</span> <br>
-                <div ng-if="message.type == 'Calculator'">
-                  <div ng-if="+message.text.split('/')[0] < 0">
-                    owes ${{message.text.split('/')[0]}} for {{message.text.split('/')[1]}}
+
+              <div class="col-sm-6 chat-box-tab-self"  style="width: 50%">
+                <div ng-if="message.author == 'Kevin Tan'">
+                  <span class="chat-message-author" style="float: right;">{{message.author}}</span> <br>
+                  <div ng-if="message.type == 'Calculator'">
+                    <div ng-if="+message.text.split('/')[0] < 0">
+                      owes ${{message.text.split('/')[0]}} for {{message.text.split('/')[1]}}
+                    </div>
+                    <div ng-if="+message.text.split('/')[0] >= 0">
+                      lent ${{message.text.split('/')[0]}} for {{message.text.split('/')[1]}}
+                    </div>
                   </div>
-                  <div ng-if="+message.text.split('/')[0] >= 0">
-                    lent ${{message.text.split('/')[0]}} for {{message.text.split('/')[1]}}
-                  </div>
+                  <div ng-if="message.type == 'Message'" class="chat-message-text">
+                    {{message.text}}
+                  </div>  
                 </div>
-                <div ng-if="message.type == 'Message'" class="chat-message-text">
-                  {{message.text}}
-                </div> 
+
               </div>
             </div>
           </div>
