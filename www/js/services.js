@@ -141,6 +141,34 @@ angular.module('starter.services', [])
 })
 
 
+.service('flightBookingServices', function ($http) { //waiting for api
+    
+    getFlight = function(id){
+        return $http({
+            method: 'GET',
+            url: what,
+            data: {
+                id: id
+            }
+        })
+    }
+    
+    bookFlight = function(email,password){
+        return $http({
+            method: 'GET',
+            url: localHost + 'validate_token',
+            data: {
+                email:email,
+                password:password
+            }
+        })
+    } 
+    
+    
+    })
+
+
+
 
 //.service('queryServices',function($http){
 

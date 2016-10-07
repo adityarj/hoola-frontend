@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('LoginCtrl', function ($scope,userServices,$state,$http) {
+.controller('LoginCtrl', function ($scope,userServices,$state,$http,$rootScope) {
     //to be filled//
     //
     console.log("loaded");
@@ -22,11 +22,23 @@ angular.module('starter.controllers', [])
             })
     }
 
+
+    //success: function(data, textStatus, xhr) {
+  //  console.log(data);
+   // console.log(xhr.getResponseHeader("Content-Length"));
+
+
     $scope.login = function (loginDetails) { //requires email and password, demand a login!
         userServices.login(loginDetails)
-        .then(function (result) {
-            $scope.loggedIn = true
-            $scope.loginMessage = "You have successfully logged in!"
+        .then(function(response) {
+        console.log('Content-Range: ' + response.headers('Content-Range'));
+        console.log( response.data);
+        //.then(function (data,xhr) {
+        //    $scope.loggedIn = true
+        //    $scope.loginMessage = "You have successfully logged in!"
+        //    console.log(xhr);
+        //    console.log(xhr.getResponseHeader("Content-Length"));
+            
         }), function (reject) {
             $scope.loggedIn = false
             $scope.loginMessage = "Incorrect email and/or password. Please try again"
