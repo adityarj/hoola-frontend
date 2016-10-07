@@ -2,32 +2,35 @@
   <ion-content class="padding">
     <div>
       <div ng-controller="FlightController">
-          <md-datepicker ng-model="Reservation.checkIn" md-placeholder="Onward"></md-datepicker>
-          <md-datepicker ng-model="Reservation.checkOut" md-placeholder="Return" md-min-date="Reservation.checkIn"></md-datepicker>
+          <md-datepicker ng-model="Reservation.depart" md-placeholder="Depart"></md-datepicker>
         <div>People</div>
           <md-button ng-disabled="true" class="md-raised md-primary">
             {{Reservation.people}}
           </md-button>
         <div>Origin</div>
           <md-button ng-disabled="true" class="md-raised md-primary">
-            {{Reservation.origin}}
+            {{airports[Reservation.origin].city}}
           </md-button>  
         <div>Destination</div>
           <md-button ng-disabled="true" class="md-raised md-primary">
-            {{Reservation.destination}}
+            {{airports[Reservation.destination].city}}
           </md-button>
 
-        <md-button class="md-raised md-primary" ng-disabled={{disabledStatus}} ng-click="fetchHotels(Reservation)">Go!</md-button>
-        <div>
+        <md-button class="md-raised md-primary" ng-disabled={{disabledStatus}} ng-click="fetchFlights(Reservation)">Go!</md-button>
+        <div ng-repeat="listing in listings">
             <md-card md-theme="dark-orange" md-theme-watch>
               <img ng-src="">
               <md-card-title>
                 <md-card-title-text>
-                  <span class="md-headline">$392</span>
+                  <span class="md-headline">${{listing.fare.total_price}}</span>
                   <span class="md-subhead">
-                     TZ322 <br>
-                     Depart 0955 Arrive 1605 <br>
-                     Singapore to Tokyo (Narita), 7h 55min | 0 stops
+                     <div ng-repeat="itir in listing.itineraries">
+                        <div ng-repeat="flight in itir.outbound.flights" >
+                          {{flight.marketing_airline}} {{flight.flight_number}}      {{airports[flight.origin.airport].city}} to {{airports[flight.destination.airport].city}}<br>
+                          {{flight.departs_at.substr(11)}} {{flight.arrives_at.substr(11)}} {{flight.aircraft}}
+                        </div>
+                      </div>
+                      {{Reservation.origin}} to {{Reservation.destination}}  {{listing.itineraries.total_hrs}} hr {{listing.itineraries.total_min}} min ({{listing.itineraries.length}} stops)
                   </span>
                 </md-card-title-text>
               </md-card-title>

@@ -6,23 +6,23 @@
 
           <form class="list list-inset" ng-submit="login(loginDetails)">
 
-              <md-content md-theme="docs-dark" layout-gt-sm="row" layout-padding>
+              <md-content md-theme="default" layout-gt-sm="row" layout-padding>
               <div>
                 <md-input-container>
                   <label>Email</label>
-                  <input ng-model="loginDetails.email">
+                  <input ng-model="loginDetails.email" type="email">
                 </md-input-container>
 
                 <md-input-container>
                   <label>Password</label>
-                  <input ng-model="loginDetails.password"type="email">
+                  <input ng-model="loginDetails.password"type="password">
                 </md-input-container>
               </div>
             </md-content>
               <md-button class="md-primary md-inkripple md-raised" md-colors="{background: 'light-green'}">Login</md-button>
           </form>
 
-              <md-button class="md-primary md-inkripple md-raised" md-colors="{background: 'lime'}" ng-click="changeTab('tab.register')" >New? Sign Up
+              <md-button class="md-primary md-inkripple md-raised" md-colors="{background: 'lime'}" ng-click="changeTab('tab.account')" >New? Sign Up
               </md-button>
 
       </center>

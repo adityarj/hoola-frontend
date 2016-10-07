@@ -17,10 +17,10 @@
         <md-button class="md-raised md-primary" ng-disabled={{disabledStatus}} ng-click="fetchHotels(Reservation)">Go!</md-button>
         <div>
             <md-card md-theme="dark-purple" md-theme-watch>
-              <img ng-src="http://en.parkhoteltokyo.com/wp-content/uploads/sites/44/2014/12/ParkHotelTokyo-CityQueenRoomWithTokyoTowerView4-Tokyo-1600x1000.jpg" height="500" width="300"class="md-card-image" alt="Washed Out">
+              <img ng-src="http://en.parkhoteltokyo.com/wp-content/uploads/sites/44/2014/12/ParkHotelTokyo-CityQueenRoomWithTokyoTowerView4-Tokyo-1600x1000.jpg" height="500" width="300" class="md-card-image" alt="Washed Out">
               <md-card-title>
                 <md-card-title-text>
-                  <span class="md-headline">$48</span>
+                  <span class="md-headline">{{listing.fare.total_price}}</span>
                   <span class="md-subhead">Holydale Plains, #32-B, Kurosawa Street 31, Ohana District, Tokyo, 523912</span>
                 </md-card-title-text>
               </md-card-title>

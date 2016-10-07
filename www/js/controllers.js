@@ -1,3 +1,5 @@
+
+
 angular.module('starter.controllers', [])
 
 .controller('LoginCtrl', function ($scope,userServices,$state,$http,$rootScope) {
@@ -178,24 +180,113 @@ angular.module('starter.controllers', [])
 })
 
 .controller('FlightController',function($scope,$http) {
+
+    $scope.airports = {
+        SIN: {
+            city: 'Singapore',
+            time: 480
+        },
+        NRT: {
+            city: 'Tokyo',
+            time: 540
+        },
+        TPE: {city: 'Taipei'},
+        MNL: { city: 'Manila'},
+        CTU: {city: 'Chengdu'},
+        SGN: {city: 'Hanoi'},
+        PEK: {city: 'Beijing'},
+        PVG: {city: 'Shanghai'}, 
+        PEN: {
+            city: 'Penang',
+            time: 480
+        },
+        DPS: {
+            city: 'Bali',
+            time: 420
+        },
+        KUL: {
+            city: 'Kuala Lumpur',
+            time: '480'
+        } 
+    };
+
     $scope.disabledStatus = false;
 
     $scope.Reservation = {
         people: 2,
-        origin: 'Singapore',
-        destination: 'Tokyo, Japan',
-        checkIn: '',
-        checkOut: ''
+        origin: 'SIN',
+        destination: 'NRT',
+        depart: ''
     };
 
     $scope.listings = [];
 
     $scope.fetchFlights = function() {
-        $http.get('//')
+        console.log('fetching flights')
+        $scope.disabledStatus = true;
+        $http.get('https://api.sandbox.amadeus.com/v1.2/flights/low-fare-search?apikey=HmYcharZZH0rBuoOvwHP4H96b6ZYXqnu&origin='
+            +$scope.Reservation.origin+'&destination='
+            +$scope.Reservation.destination+'&departure_date='
+            +moment($scope.Reservation.depart).format('YYYY-MM-DD')+'&number_of_results=5')
             .success(function(listings) {
-                $scope.disabledStatus = true;
-                console.log(listings);
+                
+                $scope.disabledStatus = false;
+                
+                console.log(listings.results);
+                for (i = 0;i < listings.results.length;i++) {
+                    for (j = 0; j < listings.results[i].itineraries.length;j++) {
+                        var previousArrivalTime = null;
+                        var totalFlightTime = 0;
+                        var arriveSubstr = 1;
+                        var departSubstr = 1;
+                        listings.results[i].itineraries[j].outbound.flights.forEach(function(flight) {
+
+                            var departTime = new moment(flight.departs_at.substr(11),'HH:mm')
+                            var arrivalTime = new moment(flight.arrives_at.substr(11),'HH:mm')
+
+                            if (previousArrivalTime) {
+                                if (departTime < previousArrivalTime) {
+
+                                    totalFlightTime+= (+departTime.hours() + 24 - +previousArrivalTime.hours())*60 + (+departTime.minutes() - +previousArrivalTime.minutes());
+                                } else {
+                                    totalFlightTime+= (+departTime.hours() - +previousArrivalTime.hours())*60 + (+departTime.minutes() - +previousArrivalTime.minutes());
+                                }
+                            }
+
+                            if (departTime < arrivalTime) {
+                                totalFlightTime+= (+arrivalTime.hours() - +departTime.hours())*60 + (+arrivalTime.minutes() - +departTime.minutes());
+                            } else {
+                                totalFlightTime+= (+arrivalTime.hours() + 24 - +departTime.hours())*60 + (+arrivalTime.minutes() - +departTime.minutes());
+                            }
+                            previousArrivalTime = arrivalTime;
+
+                        });
+
+                        totalFlightTime -= $scope.airports['NRT'].time - $scope.airports['SIN'].time;
+
+                        listings.results[i].itineraries['total_hrs'] = Math.floor(totalFlightTime/60);
+                        listings.results[i].itineraries['total_min'] = totalFlightTime%60;
+
+                    }
+                }
+                $scope.listings = listings.results;
             });
+     };
+
+    $scope.totalFlightTime = [];
+
+    $scope.timeCalculator = function (flights) {
+        var flightDuration = 0;
+        var earlierFlightDuration = null;
+        flights.forEach(function(flight) {
+            if (earlierFlightDuration) {
+                flightDuration+= flight.departs_at - earlierFlightDuration;
+            }
+            flightDuration+= flight.arrives_at.replace(':','') - flight.departs_at.replace(':',''); 
+            earlierFlightDuration = flight.arrives_at;
+        });
+        $scope.totalFlightTime.push(flightDuration);
+        return true;
     };
 
     $scope.bookFlight = function() {
