@@ -1,4 +1,4 @@
-"# hoola-frontend" 
+"# hoola-frontend"
 Open www for all the assets
 
 # README from backend
@@ -24,7 +24,7 @@ To create a user submit a POST request to /api/v1/auth with the params:
 8. password_confirmation
 
 cURL equivalent
-curl  -X POST -d "username=user" -d "first_name=john" -d "last_name=doe" -d "city=Singapore" -d "email=email@example.com" -d "password=password123" -d "password_confirmation=password123" http://localhost:3000/api/v1/auth
+curl  -X POST -d "username=user" -d "first_name=john" -d "last_name=doe" -d "city=Singapore" -d "email=email@example.com" -d "password=password123" -d "password_confirmation=password123" http://hoola-rails.herokuapp.com/api/v1/auth
 
 ### DELETE
 
@@ -38,7 +38,7 @@ To update user info submit a PUT request to /api/v1/auth with params:
 3. whatever you want to update
 
 cURL equivalent
-curl  -X PUT -d "username=not_user" -d "password=password123" -d "password_confirmation=password123" http://localhost:3000/api/v1/auth
+curl  -X PUT -d "username=not_user" -d "password=password123" -d "password_confirmation=password123" http://hoola-rails.herokuapp.com/api/v1/auth
 
 ### SIGN IN
 
@@ -46,13 +46,13 @@ To sign in submit a POST request to /api/v1/auth/sign_in with params:
 1. email
 2. password
 
-curl  -X POST -d "email=email@example.com" -d "password=password123" http://localhost:3000/api/v1/auth/sign_in
+curl  -X POST -d "email=email@example.com" -d "password=password123" http://hoola-rails.herokuapp.com/api/v1/auth/sign_in
 
 ### SIGN OUT
 
 To sign out submit a DELETE request to /api/v1/auth/sign_out
 
-curl -i -X DELETE http://localhost:3000/api/v1/auth/sign_out -F access-token="RxSwk-hukd3L8dGf2qgXpg" -F uid="email@example.com" -F client="eaq4SuJzHMHN3uyvcBa-fg"
+curl -i -X DELETE http://hoola-rails.herokuapp.com/api/v1/auth/sign_out -F access-token="RxSwk-hukd3L8dGf2qgXpg" -F uid="email@example.com" -F client="eaq4SuJzHMHN3uyvcBa-fg"
 
 ### VALIDATE TOKEN
 
@@ -60,7 +60,7 @@ Use this to validate tokens on client return visit, method: GET params:
 1. id
 2. auth_token
 
-curl  -X GET -d "id=1" -d "auth_token=token" http://localhost:3000/api/v1/auth/validate_token
+curl  -X GET -d "id=1" -d "auth_token=token" http://hoola-rails.herokuapp.com/api/v1/auth/validate_token
 
 ### HEADER
 
@@ -82,21 +82,21 @@ Transfer-Encoding: chunked
 
 INDEX
 
-This action returns EVERY SINGLE listing that has been created, to get it just submit a GET request to http://localhost:3000/api/v1/listings
+This action returns EVERY SINGLE listing that has been created, to get it just submit a GET request to http://hoola-rails.herokuapp.com/api/v1/listings
 
 response:
 
 [{"id":1,"title":"lala","status":"initial","destination":"wherever","description":"just a lala","departure":"-4712-01-01","user_id":1},{"id":2,"title":"not lala","status":"initial","destination":"wherever not","description":"nononon just a lala","departure":"-4712-01-01","user_id":1}]
 GET
 
-This action returns single listing, method: GET params to http://localhost:3000/api/v1/listings/{id}:
+This action returns single listing, method: GET params to http://hoola-rails.herokuapp.com/api/v1/listings/{id}:
 
 response:
 
 {"id":1,"title":"lala","status":"initial","destination":"wherever","description":"just a lala","departure":"-4712-01-01","user_id":1}
 CREATE
 
-This action creates a listing, method: POST to http://localhost:3000/api/v1/listings.
+This action creates a listing, method: POST to http://hoola-rails.herokuapp.com/api/v1/listings.
 
 Sample JSON params:
 
@@ -105,7 +105,7 @@ response will return the object JSON when it's successfull and `{ errors: "error
 
 UPDATE
 
-This action creates a listing, method: PUT to http://localhost:3000/api/v1/listings/{id}.
+This action creates a listing, method: PUT to http://hoola-rails.herokuapp.com/api/v1/listings/{id}.
 
 Sample JSON params:
 
@@ -114,7 +114,7 @@ response will return the object JSON when it's successfull and `{ errors: "error
 
 DESTROY
 
-This action will delete a listing, method: DELETE to http://localhost:3000/api/v1/listings/{id}.
+This action will delete a listing, method: DELETE to http://hoola-rails.herokuapp.com/api/v1/listings/{id}.
 
 response:
 

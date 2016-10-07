@@ -11,11 +11,11 @@ angular.module('starter.controllers', [])
     $scope.changeTab = function (tab) {
 
         $state.go(tab); //update this later
-        
+
     }
 
     $scope.newUser = function (loginDetails) { //tbd
-        
+
         userServices.newUser(loginDetails)
             .then(function(result){
                 $scope.success = "You have successfully created a new account!"
@@ -40,7 +40,7 @@ angular.module('starter.controllers', [])
         console.log(response.headers());
         $state.go('tab.listings') //to be edited later for main page.
         $scope.loggedIn = true
-                    
+
         }), function (reject) {
             $scope.loggedIn = false
             $scope.loginMessage = "Incorrect email and/or password. Please try again"
@@ -49,7 +49,7 @@ angular.module('starter.controllers', [])
     }
 
     $scope.returnVisit = function (loginDetails) { //requires id and auth_token not working yet
-        
+
         userServices.validateUser(loginDetails)
         .then(function (success){
             $scope.loggedIn = true
@@ -72,7 +72,7 @@ angular.module('starter.controllers', [])
     }
 
 
-    
+
 })
 
 .controller('ListingsCtrl', function (listingServices,$scope,$http,$rootScope,$state) {
@@ -98,7 +98,7 @@ angular.module('starter.controllers', [])
 
     $scope.createListing = function (listingDetails) {
         $scope.listingDetails.Date = Date.new
-        
+
         listingServices.createListing(listingDetails)
         .then(function (result) {
             $rootScope.listingID = result.data.data.id
@@ -115,7 +115,7 @@ angular.module('starter.controllers', [])
     //description: listingDetails.description,
     //departure: listingDetails.Date, //help with this pleaseee? Not sure if date format is correct.
    // user_id: listingDetails.id
-    
+
 
     $scope.updateListing = function(listingDetails){
         listingServices.updateListing(listingDetails)
@@ -133,7 +133,7 @@ angular.module('starter.controllers', [])
             $scope.deleteMessage = "You have deleted your listing."
         })
     }
-    
+
     $scope.changeTab = function (tab) {
 
         $state.go(tab);
@@ -200,13 +200,13 @@ angular.module('starter.controllers', [])
             var messagePlate = {
                 channel: 'public-chat',
                 message: {
-                    author: 'Kevin Tan',
+                    author: $rootScope.data.first_name,
                     text: $rootScope.data.first_name +' '+ $rootScope.data.last_name,
                     type: 'Message'
                 }
             };
         }
-        
+
         if ($scope.Message!=null) {
             $http.post('http://hoola-rails.herokuapp.com/api/v1/chats',angular.toJson(messagePlate, true));
         }
@@ -244,7 +244,7 @@ angular.module('starter.controllers', [])
 
     $scope.listings = [];
 
-    
+
 
     $scope.fetchHotels = function() {
         $http.get('https://api.airbnb.com/v2/search_results?client_id=3092nxybyb0otqw18e8nh5nty&locale=en-US&currency=SGD&_format=for_search_results_with_minimal_pricing&_limit=10&_offset=0&fetch_facets=true&guests=1&ib=true&ib_add_photo_flow=true&'
@@ -282,7 +282,7 @@ angular.module('starter.controllers', [])
         CTU: {city: 'Chengdu'},
         SGN: {city: 'Hanoi'},
         PEK: {city: 'Beijing'},
-        PVG: {city: 'Shanghai'}, 
+        PVG: {city: 'Shanghai'},
         PEN: {
             city: 'Penang',
             time: 480
@@ -302,7 +302,7 @@ angular.module('starter.controllers', [])
         KUL: {
             city: 'Kuala Lumpur',
             time: '480'
-        } 
+        }
     };
 
     $scope.disabledStatus = false;
@@ -324,9 +324,9 @@ angular.module('starter.controllers', [])
             +$scope.Reservation.destination+'&departure_date='
             +moment($scope.Reservation.depart).format('YYYY-MM-DD')+'&number_of_results=5')
             .success(function(listings) {
-                
+
                 $scope.disabledStatus = false;
-                
+
                 console.log(listings.results);
                 for (i = 0;i < listings.results.length;i++) {
                     for (j = 0; j < listings.results[i].itineraries.length;j++) {
@@ -406,14 +406,14 @@ angular.module('starter.controllers', [])
         //flight_number: flightBookingDetails.flight_number,
         //flight_date: flightBookingDetails.flight_date,
         //price: flightBookingDetails.price
-        
 
-        
+
+
         //Perform post request here, change params if needed
-        
+
     };
 })
- 
+
 .controller('ChatsCtrl', function ($scope, Chats) {
     // With the new view caching in Ionic, Controllers are only called
     // when they are recreated or on app start, instead of every page change.

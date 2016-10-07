@@ -53,14 +53,14 @@ angular.module('starter.services', [])
 
 .service('userServices',function($http){
     var herokuUrl = "http://hoola-rails.herokuapp.com/api/v1/auth/"; //use this on mobile device
-    var localHost = "http://localhost:1337/hoola-rails.herokuapp.com/api/v1/auth/"; //use this url when developing
+    var localHost = "http://hoola-rails.herokuapp.com/api/v1/auth/"; //use this url when developing
 
     function newUser(loginDetails) {
         return $http({
             method: 'POST',
             url: localHost,
             data: {
-                username: loginDetails.username,                
+                username: loginDetails.username,
                 first_name: loginDetails.first_name,
                 last_name: loginDetails.last_name,
                 city: loginDetails.city,
@@ -102,7 +102,7 @@ angular.module('starter.services', [])
             data: {
                 email: loginDetails.email,
                 password: loginDetails.password
-                
+
             }
         })
         //probably add .then(result) { ...} and set login parameter to true
@@ -144,7 +144,7 @@ angular.module('starter.services', [])
 
 
 .service('listingServices', function ($http) { //waiting for api
-    var localHost2 = "http://localhost:1337/hoola-rails.herokuapp.com/api/v1/listings/" //flight booking prototyping url
+    var localHost2 = "http://hoola-rails.herokuapp.com/api/v1/listings/" //flight booking prototyping url
 
     getAllListings = function () {  //index
         return $http({
@@ -153,7 +153,7 @@ angular.module('starter.services', [])
         })
     }
 
-  
+
     getListing = function(id){
         return $http({
             method: 'GET',
@@ -200,7 +200,7 @@ angular.module('starter.services', [])
         })
         //will get object json if successful, error description if error.
     }
-    
+
     return {
         getAllListings: getAllListings,
         getListing: getListing,
@@ -208,11 +208,11 @@ angular.module('starter.services', [])
         updateListing: updateListing,
         deleteListing: deleteListing
     }
-    
+
 })
     //implement stay controller and flight booking controller, find a way to restrict chat.
 .service('flightBookingService', function(){
-    var localHost3 = "http://localhost:3000/api/v1/flight_bookings";
+    var localHost3 = "http://hoola-rails.herokuapp.com/api/v1/flight_bookings";
     getAllFlightBookings = function () { //will get object json if successful, error description if error.
 
         return $http({
@@ -283,7 +283,7 @@ angular.module('starter.services', [])
 })
 
 .service('hotelBookingService', function (hotelBookingServices) {
-    var localHost4 = "http://localhost:3000/api/v1/accommodation_bookings";
+    var localHost4 = "http://hoola-rails.herokuapp.com/api/v1/accommodation_bookings";
     getAllHotelBookings = function () { //will get object json if successful, error description if error.
 
         return $http({
