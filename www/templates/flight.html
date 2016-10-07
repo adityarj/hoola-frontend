@@ -1,4 +1,4 @@
-<ion-view view-title="Stay Reservation">
+<ion-view view-title="Flight Reservation">
   <ion-content class="padding">
     <div>
       <div ng-controller="FlightController">
@@ -37,11 +37,15 @@
                   <span class="md-subhead">
                      <div ng-repeat="itir in listing.itineraries">
                         <div ng-repeat="flight in itir.outbound.flights" >
-                          {{flight.marketing_airline}} {{flight.flight_number}}      {{airports[flight.origin.airport].city}} to {{airports[flight.destination.airport].city}}<br>
-                          {{flight.departs_at.substr(11)}} {{flight.arrives_at.substr(11)}} {{flight.aircraft}}
+                          <span class="flight-headers">{{flight.marketing_airline}} {{flight.flight_number}} {{airports[flight.origin.airport].city}} to {{airports[flight.destination.airport].city}}</span><br>
+                          <span class="flight-timings">
+                          {{flight.departs_at.substr(11)}} {{flight.arrives_at.substr(11)}} ({{flight.aircraft}})
+                          </span>
                         </div>
                       </div>
-                      {{airports[Reservation.origin].city}} to {{airports[Reservation.destination].city}}  {{listing.itineraries.total_hrs}} hr {{listing.itineraries.total_min}} min ({{listing.itineraries.length}} stops)
+                      <p class="final-flight-listing">
+                        {{airports[Reservation.origin].city}} <i class="fa fa-arrow-right" aria-hidden="true"></i> {{airports[Reservation.destination].city}} | <i class="fa fa-clock-o" aria-hidden="true"></i> {{listing.itineraries.total_hrs}} hr {{listing.itineraries.total_min}} min ({{listing.itineraries.length}} stops)
+                      </p>
                   </span>
                 </md-card-title-text>
               </md-card-title>

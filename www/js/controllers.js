@@ -199,7 +199,10 @@ angular.module('starter.controllers', [])
             $scope.Message = Message+' ';
         } else if (Message == '@money') {
             $scope.showCalculator = true;
+        } else {
+            $scope.showCalculator = false;
         }
+
     };
 
     retrieveItems();
@@ -260,6 +263,14 @@ angular.module('starter.controllers', [])
         PEN: {
             city: 'Penang',
             time: 480
+        },
+        DMK: {
+            city: 'Bangkok',
+            time: 420
+        },
+        BKK: {
+            city: 'Bangkok',
+            time: 420
         },
         DPS: {
             city: 'Bali',
