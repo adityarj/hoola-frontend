@@ -170,7 +170,7 @@ angular.module('starter.controllers', [])
             var messagePlate = {
                 channel: 'public-chat',
                 message: {
-                    author: 'Kevin Tan',
+                    author: 'Kevin Tan',//$rootScope.data.first_name +' '+ $rootScope.data.last_name,
                     text: $scope.BalanceTab.amount+'/'+$scope.BalanceTab.activity,
                     type: 'Calculator'
                 }
