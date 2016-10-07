@@ -5,14 +5,55 @@
   The Friends service returns an array of friend data
 -->
 
-<ion-view view-title="Listings">
+<ion-view view-title="Home">
   <ion-content class="padding">
+      <!--title: listingDetails.title,
+      destination: listingDetails.destination,
+      description: listingDetails.description,
+      departure: listingDetails.Date, //help with this pleaseee? Not sure if date format is correct.
+      user_id: listingDetails.id-->
+
+    <form class="list list-inset" ng-submit="createListing(listingDetails)">
+
+        <md-content md-theme="docs-dark" layout-gt-sm="row" layout-padding>
+            <div>
+                <md-input-container>
+                    <label>Title of your listing</label>
+                    <input ng-model="listingDetails.title" type="text">
+                </md-input-container>
+
+                <md-input-container>
+                    <label>Destination</label>
+                    <input ng-model="listingDetails.destination" type="text">
+                </md-input-container>
+
+                <md-input-container>
+                    <label>Description</label>
+                    <input ng-model="listingDetails.description" type="text">
+                </md-input-container>
+
+                <!--<md-input-container>
+                    <label>Date</label>
+                    <input ng-model="listingDetails.Date" type="date">
+                </md-input-container>
+
+                <md-input-container>
+                    <label>id</label>
+                    <input ng-model="listingDetails.id" type="text">
+                </md-input-container>-->
+
+
+            </div>
+        </md-content>
+        <md-button class="md-primary md-inkripple md-raised" md-colors="{background: 'light-green'}" type="submit">Create your own listing!</md-button>
+    </form>
+
     <div>
-      <div ng-controller="ListingsCtrl">
         <div ng-repeat="listing in ListofListings">
-          {{listing.city}} 
-          {{listing.personName}}
-        </div>
+          Trip name: {{listing.title}}    <br />
+          Destination: {{listing.destination}} <br />
+          Description: {{listing.description}} <br />  
+            
       </div>
     </div>
   </ion-content>

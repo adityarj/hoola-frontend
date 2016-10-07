@@ -35,7 +35,8 @@ angular.module('starter.controllers', [])
     $scope.login = function (loginDetails) { //requires email and password, demand a login!
         userServices.login(loginDetails)
         .then(function(response) {
-        console.log('Content-Range: ' + response.headers('Content-Range'));
+            $rootScope.header = response.headers()
+            $rootScope.id = response.data.data.id
         console.log(response.headers());
         $state.go('tab.chats') //to be edited later for main page.
         $scope.loggedIn = true
@@ -102,10 +103,61 @@ angular.module('starter.controllers', [])
     
 })
 
-.controller('listingsCtrl', function () {
+.controller('ListingsCtrl', function (listingServices,$scope,$http,$rootScope) {
     $scope.ListofListings = {}
+    $scope.listingDetails = {}
 
+
+    $scope.getMainList = function () {
+        listingServices.getAllListings()
+        .then(function (result) {
+            $scope.ListofListings = result.data //check this result
+            console.log($scope.ListofListings);
+        })
+    }
+
+    $scope.getSingleListing = function (listingDetails) { //put id
+
+        listingServices.getListing(listingDetails)
+        .then(function (result) {
+            $scope.personalListing = result.data.data //check
+        })
+    }
+
+    $scope.createListing = function (listingDetails) {
+        $scope.listingDetails.Date = Date.new
+        $scope.listingDetails.id = $rootScope.id
+        listingServices.createListing(listingDetails)
+        .then(function(result){
+            $scope.createMessage = "Successfully created new listing!"
+            console.log("posted");
+        }),
+        function (failure) {
+            alert("Failed to create a listing");
+        }
+    }
+    //title: listingDetails.title,
+    //destination: listingDetails.destination,
+    //description: listingDetails.description,
+    //departure: listingDetails.Date, //help with this pleaseee? Not sure if date format is correct.
+   // user_id: listingDetails.id
     
+
+    $scope.updateListing = function(listingDetails){
+        listingServices.updateListing(listingDetails)
+        .then(function (result) {
+            $scope.updateMessage = "Successfully updated your listing."
+        })
+    }
+
+    $scope.deleteListing = function (listingDetails) {
+        listingServices.deleteListing(listingDetails)
+        .then(function (result) {
+            $scope.deleteMessage = "You have deleted your listing."
+        })
+    }
+    
+    $scope.getMainList()
 
 })
 

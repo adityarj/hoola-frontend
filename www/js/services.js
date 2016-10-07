@@ -143,38 +143,36 @@ angular.module('starter.services', [])
 
 .service('listingServices', function ($http) { //waiting for api
     var localHost2 = "http://localhost:1337/hoola-rails.herokuapp.com/api/v1/listings/" //flight booking prototyping url
-    getAllListings = function(){  //index
+
+    getAllListings = function () {  //index
         return $http({
             method: 'GET',
             url: localHost2,
-            data: {}
         })
     }
 
-
-    
+  
     getListing = function(id){
         return $http({
             method: 'GET',
             url: localHost2 + id,
-            data: {
-                //check
-            }
         })
     }
 
     createListing = function (listingDetails) { //will get object json if successful, error description if error.
-        return $http({
-            method: 'POST',
-            url: localHost2,
-            data: {
-                title: listingDetails.title,
-                destination: listingDetails.destination,
-                description: listingDetails.description,
-                departure: listingDetails.Date, //help with this pleaseee? Not sure if date format is correct.
-                user_id: listingDetails.id
-            }
-        })
+
+
+            return $http({
+                method: 'POST',
+                url: localHost2,
+                data: {
+                    title: listingDetails.title,
+                    destination: listingDetails.destination,
+                    description: listingDetails.description,
+                    departure: listingDetails.Date, //help with this pleaseee? Not sure if date format is correct.
+                    user_id: listingDetails.id
+                }
+            })
     }
 
     updateListing = function (listingDetails) { //will get object json if successful, error description if error.
@@ -202,6 +200,13 @@ angular.module('starter.services', [])
         //will get object json if successful, error description if error.
     }
     
+    return {
+        getAllListings: getAllListings,
+        getListing: getListing,
+        createListing: createListing,
+        updateListing: updateListing,
+        deleteListing: deleteListing
+    }
     
     })
 
