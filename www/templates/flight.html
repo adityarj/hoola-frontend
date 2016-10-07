@@ -2,19 +2,30 @@
   <ion-content class="padding">
     <div>
       <div ng-controller="FlightController">
-          <md-datepicker ng-model="Reservation.depart" md-placeholder="Depart"></md-datepicker>
-        <div>People</div>
-          <md-button ng-disabled="true" class="md-raised md-primary">
-            {{Reservation.people}}
-          </md-button>
-        <div>Origin</div>
-          <md-button ng-disabled="true" class="md-raised md-primary">
-            {{airports[Reservation.origin].city}}
-          </md-button>  
-        <div>Destination</div>
-          <md-button ng-disabled="true" class="md-raised md-primary">
-            {{airports[Reservation.destination].city}}
-          </md-button>
+        <div class="options-styling">
+            <md-datepicker ng-model="Reservation.depart" md-placeholder="Depart"></md-datepicker>
+          <div style="display: blockl" class="element-block-button">
+            <div style="display: inline-block;">
+              <div class="header-label-type">People</div>
+              <md-button ng-disabled="true" class="md-raised md-primary">
+                {{Reservation.people}}
+              </md-button>
+            </div>
+            <div style="display: inline-block;">
+             <div class="header-label-type">Origin</div>
+              <md-button ng-disabled="true" class="md-raised md-primary">
+                {{airports[Reservation.origin].city}}
+              </md-button>
+            </div>
+            <div style="display: inline-block;">
+              <div class="header-label-type">Destination</div>
+                <md-button ng-disabled="true" class="md-raised md-primary">
+                  {{airports[Reservation.destination].city}}
+                </md-button>
+            </div>
+          </div>
+        </div>
+        
 
         <md-button class="md-raised md-primary" ng-disabled={{disabledStatus}} ng-click="fetchFlights(Reservation)">Go!</md-button>
         <div ng-repeat="listing in listings">

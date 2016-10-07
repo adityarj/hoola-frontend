@@ -21,3 +21,55 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
 
+@mixin define-buttons($pixels) {
+	font-family: 'Lato Light';
+	padding-left: $pixels;
+	padding-right: $pixels;
+}
+
+.md-button {
+	display: inline-block;
+	font-family: 'Lato Light';
+	@include define-buttons(30px);
+}
+
+.image-header-wrapper {
+	position: relative;
+	display:block;
+
+	img {
+		-webkit-background-size: cover;
+	    -moz-background-size: cover;
+	    -o-background-size: cover;
+	    background-size: cover;
+	    height: 20px;
+	}
+}
+.image-wrap {
+	top: 0;
+	left: 0;
+	position: absolute;
+	padding-top: 30%;
+	height: 100%;
+	width: 100%;
+	p {
+		color: white;
+		font-family: 'Lato';
+		font-size: 5em;
+	}
+	
+}
+
+.header-label-type {
+	margin-left: 10px;
+}
+
+.element-block-button {
+	margin-top: 20px;
+}
+
+.options-styling {
+	background-color: $stable;
+	padding-bottom: 10px;
+}
+

@@ -1,9 +1,17 @@
 <ion-view view-title="Login Page">
-  <ion-content class="padding">
-    <h2>Hoola</h2>
+  <ion-content class="padding" style=" background-repeat: no-repeat;">
+    
     
       <center>
 
+          <div class="image-wrapper-header">
+            <img src="/img/autumn.png">
+            <div class="image-wrap">
+              <p>Hoola</p>
+            </div>
+            
+          </div>
+          
           <form class="list list-inset" ng-submit="login(loginDetails)">
 
               <md-content md-theme="default" layout-gt-sm="row" layout-padding>
@@ -19,12 +27,11 @@
                 </md-input-container>
               </div>
             </md-content>
-              <md-button class="md-primary md-inkripple md-raised" md-colors="{background: 'light-green'}" type="submit">Login</md-button>
-          </form>
-
-              <md-button class="md-primary md-inkripple md-raised" md-colors="{background: 'lime'}" ng-click="changeTab('register')" >New? Sign Up
-
+              <md-button class="md-primary md-inkripple md-raised " md-colors="{background: 'light-green'}" type="submit">Login</md-button>
+              <md-button class="md-primary md-inkripple md-raised " md-colors="{background: 'lime'}" ng-click="changeTab('tab.stay')" >New? Sign Up
               </md-button>
+          </form >
+              
 
       </center>
       {{loginMessage}}

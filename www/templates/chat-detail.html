@@ -27,13 +27,10 @@
         <form name="chatForm" >
             <div ng-show="showCalculator">
               <md-content layout-gt-sm="row" layout-padding>
-                <label>Amount</label>
-                <input ng-model="BalanceTab.amount" type="text" placeholder="$">
+                <input ng-model="BalanceTab.amount" type="text" placeholder="$0.00">
               </md-content>
               <md-content layout-gt-sm="row" layout-padding>
-                <label>Activity</label>
-
-                <input ng-model="BalanceTab.activity" type="text">
+                <input ng-model="BalanceTab.activity" type="text" placeholder="Activity">
               </md-content>
             </div>
             <md-content layout-gt-sm="row" layout-padding>

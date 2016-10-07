@@ -2,30 +2,41 @@
   <ion-content class="padding">
     <div>
       <div ng-controller="StayController">
-        <div>Check in</div>
-          <md-datepicker ng-model="Reservation.checkIn" md-placeholder="Enter check in"></md-datepicker>
-        <div>Check out</div>
-          <md-datepicker ng-model="Reservation.checkOut" md-placeholder="Enter check out" md-min-date="Reservation.checkIn"></md-datepicker>
-        <div>People</div>
-          <md-button ng-disabled="true" class="md-raised md-primary">
-            {{Reservation.people}}
-          </md-button>
-        <div>City</div>
-          <md-button ng-disabled="true" class="md-raised md-primary">
-            {{Reservation.city}}
-          </md-button>
-        <md-button class="md-raised md-primary" ng-disabled={{disabledStatus}} ng-click="fetchHotels(Reservation)">Go!</md-button>
-        <div>
+        <div class="options-styling">
+            <md-datepicker ng-model="Reservation.checkIn" md-placeholder="Check in"></md-datepicker>
+            <md-datepicker ng-model="Reservation.checkOut" md-placeholder="Check out" md-min-date="Reservation.checkIn"></md-datepicker>
+          <div style="display: block;" class="element-block-button">
+            <div style="display: inline-block;">
+              <div class="header-label-type">People</div>
+              <md-button ng-disabled="true" class="md-raised md-primary">
+                {{Reservation.people}}
+              </md-button>
+            </div>
+            <div style="display: inline-block;">
+              <div class="header-label-type">City</div>
+              <md-button ng-disabled="true" class="md-raised md-primary">
+                {{Reservation.city}}
+              </md-button>
+               <md-button class="md-raised md-primary" ng-disabled={{disabledStatus}} ng-click="fetchHotels(Reservation)">Go!</md-button>
+            </div>  
+        </div>
+          
+        </div>
+        <div style="display: inline-block;">
+          
+        </div>
+       
+        <div ng-repeat="listing in listings">
             <md-card md-theme="dark-purple" md-theme-watch>
-              <img ng-src="http://en.parkhoteltokyo.com/wp-content/uploads/sites/44/2014/12/ParkHotelTokyo-CityQueenRoomWithTokyoTowerView4-Tokyo-1600x1000.jpg" height="500" width="300" class="md-card-image" alt="Washed Out">
+              <img ng-src="{{listing.listing.picture_url}}">
               <md-card-title>
                 <md-card-title-text>
-                  <span class="md-headline">{{listing.fare.total_price}}</span>
-                  <span class="md-subhead">Holydale Plains, #32-B, Kurosawa Street 31, Ohana District, Tokyo, 523912</span>
+                  <span class="md-headline">${{listing.pricing_quote.rate.amount}}  | {{listing.listing.star_rating}} <i class="fa fa-star" aria-hidden="true"></i></span>
+                  <span class="md-subhead">{{listing.listing.property_type}}, {{listing.listing.public_address}}</span>
                 </md-card-title-text>
               </md-card-title>
               <md-card-actions layout="row" layout-align="end center">
-                <md-button>Book</md-button>
+                <md-button ng-click="bookHotel(listing.listing.public_address)">Book</md-button>
               </md-card-actions>
             </md-card>
         </div>
