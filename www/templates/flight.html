@@ -30,7 +30,7 @@
                           {{flight.departs_at.substr(11)}} {{flight.arrives_at.substr(11)}} {{flight.aircraft}}
                         </div>
                       </div>
-                      {{Reservation.origin}} to {{Reservation.destination}}  {{listing.itineraries.total_hrs}} hr {{listing.itineraries.total_min}} min ({{listing.itineraries.length}} stops)
+                      {{airports[Reservation.origin].city}} to {{airports[Reservation.destination].city}}  {{listing.itineraries.total_hrs}} hr {{listing.itineraries.total_min}} min ({{listing.itineraries.length}} stops)
                   </span>
                 </md-card-title-text>
               </md-card-title>

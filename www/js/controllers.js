@@ -145,16 +145,16 @@ angular.module('starter.controllers', [])
 
 .controller('MessageController', function ($scope,$http) {
     $scope.items = [];
-
-    var pusher = new Pusher('6ad8804a371caa2d7eeb',{
-        cluster: 'ap1',
+    $scope.showCalculator = false;
+    var pusher = new Pusher('6e940f018f1b0b662664',{
         encrypted: 'true'
     });
 
-    var channel = pusher.subscribe('my-channel');
+    var channel = pusher.subscribe('ch-public-chat');
 
-    channel.bind('my_event',function(data) {
+    channel.bind('new-message',function(data) {
         console.log(data);
+        $scope.items.push(data);
     });
 
     var retrieveItems = function() {
@@ -166,21 +166,41 @@ angular.module('starter.controllers', [])
     };
 
     $scope.addItem = function(Message) {
-        var messagePlate = {
-            name: 'You',
-            message: Message
-        };
-        $http.post('/api/post',Message);
-        $scope.items.push(messagePlate);
+        if ($scope.showCalculator) {
+            var messagePlate = {
+                channel: 'public-chat',
+                message: {
+                    author: 'Kevin Tan',
+                    text: $scope.BalanceTab.amount+'/'+$scope.BalanceTab.activity,
+                    type: 'Calculator'
+                }
+            }
+        } else {
+            var messagePlate = {
+                channel: 'public-chat',
+                message: {
+                    author: 'Kevin Tan',
+                    text: $scope.Message,
+                    type: 'Message'
+                }
+            };
+        }
+        
+        if ($scope.Message!=null) {
+            $http.post('http://hoola-rails.herokuapp.com/api/v1/chats',angular.toJson(messagePlate, true));
+        }
         $scope.Message = null;
+        $scope.showCalculator = false;
     };
 
     $scope.triggerInputHandler = function(Message) {
         if (Message == '@hoola') {
             //Trigger api.ai 
             $scope.Message = Message+' ';
+        } else if (Message == '@calculator') {
+            $scope.showCalculator = true;
         }
-    }
+    };
 
     retrieveItems();
 })
