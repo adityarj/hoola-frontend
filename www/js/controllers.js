@@ -36,7 +36,7 @@ angular.module('starter.controllers', [])
         userServices.login(loginDetails)
         .then(function(response) {
             $rootScope.header = response.headers()
-            $rootScope.id = response.data.data.id
+            $rootScope.data = response.data.data
         console.log(response.headers());
         $state.go('tab.listings') //to be edited later for main page.
         $scope.loggedIn = true
@@ -79,7 +79,7 @@ angular.module('starter.controllers', [])
     $scope.ListofListings = {}
     $scope.listingDetails = {}
     $scope.PersonalListings = {}
-    $scope.listingDetails.id = $rootScope.id
+    $scope.listingDetails.id = $rootScope.data.id
     $scope.getMainList = function () {
         listingServices.getAllListings()
         .then(function (result) {
@@ -100,7 +100,8 @@ angular.module('starter.controllers', [])
         $scope.listingDetails.Date = Date.new
         
         listingServices.createListing(listingDetails)
-        .then(function(result){
+        .then(function (result) {
+            $rootScope.listingID = result.data.data.id
             $scope.createMessage = "Successfully created new listing!"
             console.log("posted");
             $scope.getMainList() //refresh listings
@@ -143,7 +144,7 @@ angular.module('starter.controllers', [])
 })
 
 
-.controller('MessageController', function ($scope,$http) {
+.controller('MessageController', function ($scope,$http,$rootScope) {
     $scope.items = [];
     $scope.showCalculator = false;
     var pusher = new Pusher('6e940f018f1b0b662664',{
@@ -170,7 +171,7 @@ angular.module('starter.controllers', [])
             var messagePlate = {
                 channel: 'public-chat',
                 message: {
-                    author: 'Kevin Tan',
+                    author: 'John Smith',
                     text: $scope.BalanceTab.amount+'/'+$scope.BalanceTab.activity,
                     type: 'Calculator'
                 }
@@ -179,7 +180,7 @@ angular.module('starter.controllers', [])
             var messagePlate = {
                 channel: 'public-chat',
                 message: {
-                    author: 'Kevin Tan',
+                    author: 'John Smith',
                     text: $scope.Message,
                     type: 'Message'
                 }
@@ -211,7 +212,7 @@ angular.module('starter.controllers', [])
 .controller('StayController', function ($scope,$http) {
     //Replace this initialization with global scope values once completed
     $scope.disabledStatus = false;
-
+    $scope.hotelBookingDetails.id = $rootScope.listingID
     $scope.Reservation = {
         people: 2,
         city: 'Tokyo',
@@ -243,7 +244,7 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('FlightController',function($scope,$http) {
+.controller('FlightController',function($scope,$http,flightBookingService) {
 
     $scope.airports = {
         SIN: {
@@ -365,21 +366,33 @@ angular.module('starter.controllers', [])
             var flight_info = {
                 origin: flight1.origin.airport,
                 destination: flight1.destination.airport,
-                depart: new moment(flight1.departs_at.substr(11),'HH:mm'),
-                arrival: new moment(flight1.arrives_at.substr(11),'HH:mm'),
-                date: new moment($scope.Reservation.depart),
-                flight_num: flight1.marketing_airline+flight1.flight_number,
+                departure_time: new moment(flight1.departs_at.substr(11),'HH:mm'),
+                arrival_time: new moment(flight1.arrives_at.substr(11),'HH:mm'),
+                flight_date: new moment($scope.Reservation.depart),
+                flight_number: flight1.marketing_airline+flight1.flight_number,
             }
         }
 
         console.log(flight_info);
 
+        flightBookingService.createBooking(flight_info);
+
+
+        //listing: flightBookingDetails.listing,
+        //origin: flightBookingDetails.origin,
+        //destination: flightBookingDetails.destination,
+        //flight_number: flightBookingDetails.flight_number,
+        //flight_date: flightBookingDetails.flight_date,
+        //price: flightBookingDetails.price
+        
+
+        
         //Perform post request here, change params if needed
         
     };
 })
  
-.controller('ChatsCtrl', function($scope, Chats) {
+.controller('ChatsCtrl', function ($scope, Chats) {
     // With the new view caching in Ionic, Controllers are only called
     // when they are recreated or on app start, instead of every page change.
     // To listen for when this page is active (for example, to refresh data),
@@ -389,14 +402,15 @@ angular.module('starter.controllers', [])
     //});
 
     $scope.chats = Chats.all();
-    $scope.remove = function(chat) {
+    $scope.remove = function (chat) {
         Chats.remove(chat);
     };
 })
 
-.controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
+.controller('ChatDetailCtrl', function ($scope, $stateParams, Chats) {
     $scope.chat = Chats.get($stateParams.chatId);
 })
+
 
 .controller('AccountCtrl', function($scope) {
     $scope.settings = {

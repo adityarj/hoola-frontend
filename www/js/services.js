@@ -1,53 +1,55 @@
 angular.module('starter.services', [])
 
-.factory('Chats', function() {
-  // Might use a resource here that returns a JSON array
+.factory('Chats', function () {
+    // Might use a resource here that returns a JSON array
 
-  // Some fake testing data
-  var chats = [{
-    id: 0,
-    name: 'Ben Sparrow',
-    lastText: 'You on your way?',
-    face: 'img/ben.png'
-  }, {
-    id: 1,
-    name: 'Max Lynx',
-    lastText: 'Hey, it\'s me',
-    face: 'img/max.png'
-  }, {
-    id: 2,
-    name: 'Adam Bradleyson',
-    lastText: 'I should buy a boat',
-    face: 'img/adam.jpg'
-  }, {
-    id: 3,
-    name: 'Perry Governor',
-    lastText: 'Look at my mukluks!',
-    face: 'img/perry.png'
-  }, {
-    id: 4,
-    name: 'Mike Harrington',
-    lastText: 'This is wicked good ice cream.',
-    face: 'img/mike.png'
-  }];
+    // Some fake testing data
+    var chats = [{
+        id: 0,
+        name: 'Ben Sparrow',
+        lastText: 'You on your way?',
+        face: 'img/ben.png'
+    }, {
+        id: 1,
+        name: 'Max Lynx',
+        lastText: 'Hey, it\'s me',
+        face: 'img/max.png'
+    }, {
+        id: 2,
+        name: 'Adam Bradleyson',
+        lastText: 'I should buy a boat',
+        face: 'img/adam.jpg'
+    }, {
+        id: 3,
+        name: 'Perry Governor',
+        lastText: 'Look at my mukluks!',
+        face: 'img/perry.png'
+    }, {
+        id: 4,
+        name: 'Mike Harrington',
+        lastText: 'This is wicked good ice cream.',
+        face: 'img/mike.png'
+    }];
 
-  return {
-    all: function() {
-      return chats;
-    },
-    remove: function(chat) {
-      chats.splice(chats.indexOf(chat), 1);
-    },
-    get: function(chatId) {
-      for (var i = 0; i < chats.length; i++) {
-        if (chats[i].id === parseInt(chatId)) {
-          return chats[i];
+    return {
+        all: function () {
+            return chats;
+        },
+        remove: function (chat) {
+            chats.splice(chats.indexOf(chat), 1);
+        },
+        get: function (chatId) {
+            for (var i = 0; i < chats.length; i++) {
+                if (chats[i].id === parseInt(chatId)) {
+                    return chats[i];
+                }
+            }
+            return null;
         }
-      }
-      return null;
-    }
-  };
+    };
 })
+
+
 
 .service('userServices',function($http){
     var herokuUrl = "http://hoola-rails.herokuapp.com/api/v1/auth/"; //use this on mobile device
@@ -100,7 +102,7 @@ angular.module('starter.services', [])
             data: {
                 email: loginDetails.email,
                 password: loginDetails.password
-                //will get true response
+                
             }
         })
         //probably add .then(result) { ...} and set login parameter to true
@@ -161,18 +163,17 @@ angular.module('starter.services', [])
 
     createListing = function (listingDetails) { //will get object json if successful, error description if error.
 
-
-            return $http({
-                method: 'POST',
-                url: localHost2,
-                data: {
-                    title: listingDetails.title,
-                    destination: listingDetails.destination,
-                    description: listingDetails.description,
-                    departure: listingDetails.Date, //help with this pleaseee? Not sure if date format is correct.
-                    user_id: listingDetails.id
-                }
-            })
+        return $http({
+            method: 'POST',
+            url: localHost2,
+            data: {
+                title: listingDetails.title,
+                destination: listingDetails.destination,
+                description: listingDetails.description,
+                departure: listingDetails.Date, //help with this pleaseee? Not sure if date format is correct.
+                user_id: listingDetails.id
+            }
+        })
     }
 
     updateListing = function (listingDetails) { //will get object json if successful, error description if error.
@@ -208,49 +209,150 @@ angular.module('starter.services', [])
         deleteListing: deleteListing
     }
     
-    })
+})
+    //implement stay controller and flight booking controller, find a way to restrict chat.
+.service('flightBookingService', function(){
+    var localHost3 = "http://localhost:3000/api/v1/flight_bookings";
+    getAllFlightBookings = function () { //will get object json if successful, error description if error.
 
+        return $http({
+            method: 'GET',
+            url: localHost3
+        })
+    }
 
+    getSingleFlightBooking = function (flightBookingDetails) { //will get object json if successful, error description if error.
 
+        return $http({
+            method: 'GET',
+            url: localHost3 + flightBookingDetails.id,
+            data: {
+                id: id
+            }
+        })
+    }
 
-//.service('queryServices',function($http){
+    createFlightBooking = function (flightBookingDetails) { //will get object json if successful, error description if error.
 
-//    function adder(email,start, end, city, attributes) {
-//        return $http({
-//            method: 'POST',
-//            url: 'http://hoola-sutd.herokuapp.com/api/query/add',
-//            data: {
-//                email: email,
-//                start: start,
-//                end: end,
-//                city: city,
-//                attributes: attributes
-//            }
-//        })
-//    }
+        return $http({
+            method: 'POST',
+            url: localHost3,
+            data: {
+                listing: flightBookingDetails.listing,
+                origin: flightBookingDetails.origin,
+                destination: flightBookingDetails.destination,
+                flight_number: flightBookingDetails.flight_number,
+                flight_date: flightBookingDetails.flight_date,
+                price: flightBookingDetails.price
+            }
+        })
+    }
 
-//    function deleter(email) {
-//        return $http.delete('http://hoola-sutd.herokuapp.com/api/query/delete',email);
-//        //each user can only have 1 listing.
-//    }
+    updateFlightBooking = function (flightBookingDetails) { //will get object json if successful, error description if error.
 
-//    function fetcher() {
-//        return $http.get('http://hoola-sutd.herokuapp.com/api/query/fetch',email);
-//    }
-    
+        return $http({
+            method: 'PUT',
+            url: localHost3 + flightBookingDetails.id,
+            data: {
+                listing: flightBookingDetails.listing,
+                origin: flightBookingDetails.origin,
+                destination: flightBookingDetails.destination,
+                flight_number: flightBookingDetails.flight_number,
+                flight_date: flightBookingDetails.flight_date, //is this datenew
+                price: flightBookingDetails.price
+            }
+        })
+    }
 
-//    function similarer(city) {
-//        return $http.get('http://hoola-sutd.herokuapp.com/api/query/similar', city);
-        
-//    }
+    deleteFlightBooking = function (flightBookingDetails){ //will get object json if successful, error description if error.
 
-//    return {
-//        adder: adder,
-//        deleter: deleter,
-//        fetcher: fetcher,
-//        similarer: similarer
-//    }
-//})
+        return $http({
+            method: 'DELETE',
+            url: localHost3 + flightBookingDetails.id,
+        })
+    }
+
+    return {
+        getAllFlightBookings: getAllFlightBookings,
+        getSingleFlightBooking: getSingleFlightBooking,
+        createFlightBooking: createFlightBooking,
+        updateFlightBooking: updateFlightBooking,
+        deleteFlightBooking: deleteFlightBooking
+    }
+
+})
+
+.service('hotelBookingService', function (hotelBookingServices) {
+    var localHost4 = "http://localhost:3000/api/v1/accommodation_bookings";
+    getAllHotelBookings = function () { //will get object json if successful, error description if error.
+
+        return $http({
+            method: 'GET',
+            url: localHost4
+        })
+    }
+
+    getSingleHotelBooking = function (hotelBookingDetails) { //will get object json if successful, error description if error.
+
+        return $http({
+            method: 'GET',
+            url: localHost4 + hotelBookingDetails.id,
+            data: {
+                id: id
+            }
+        })
+    }
+
+    createHotelBooking = function (hotelBookingDetails) { //will get object json if successful, error description if error.
+
+        return $http({
+            method: 'POST',
+            url: localHost4,
+            data: {
+                listing: hotelBookingDetails.listing,
+                city: hotelBookingDetails.city,
+                address: hotelBookingDetails.address,
+                check_in: hotelBookingDetails.check_in,
+                check_out: hotelBookingDetails.check_out,
+                price: hotelBookingDetails.price
+            }
+        })
+    }
+
+    updateHotelBooking = function (hotelBookingDetails) { //will get object json if successful, error description if error.
+
+        return $http({
+            method: 'PUT',
+            url: localHost4 + hotelBookingDetails.id,
+            data: {
+                listing: hotelBookingDetails.listing,
+                origin: hotelBookingDetailss.origin,
+                destination: hotelBookingDetails.destination,
+                flight_number: hotelBookingDetails.flight_number,
+                flight_date: hotelBookingDetails.flight_date, //is this datenew
+                price: hotelBookingDetails.price
+            }
+        })
+    }
+
+    deleteHotelBooking = function (hotelBookingDetails) { //will get object json if successful, error description if error.
+
+        return $http({
+            method: 'DELETE',
+            url: localHost4 + hotelBookingDetails.id,
+        })
+    }
+
+    return {
+        getAllHotelBookings: getAllHotelBookings,
+        getSingleHotelBooking: getSingleHotelBooking,
+        createHotelBooking: createHotelBooking,
+        updateHotelBooking: updateHotelBooking,
+        deleteHotelBooking: deleteHotelBooking
+    }
+
+})
+
 
 //.service("pusherService", function () {
 //    var pusher = new Pusher("254721");
