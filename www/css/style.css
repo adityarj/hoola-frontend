@@ -1,5 +1,12 @@
 /* Empty. Add your own CSS if you like */
+form {
+  font-family: "Helvetica-Neue",Helvetica;
+}
 .header-landing-page {
 	background-image: url('http://signaltower.co/wp-content/uploads/2013/05/forest-gif-background.gif');
 	background: no-repeat;
+}
+
+a {
+  text-decoration: none;
 }

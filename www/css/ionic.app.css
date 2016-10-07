@@ -3085,6 +3085,7 @@ a:hover {
  */
 a {
   -webkit-user-drag: none;
+  text-decoration: none;
   -webkit-tap-highlight-color: transparent;
   -webkit-tap-highlight-color: transparent; }
   a[href]:hover {
