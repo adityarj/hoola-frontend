@@ -9883,3 +9883,6 @@ a.button {
 .bottom-float-calculator-box {
   bottom: 15%;
   position: fixed; }
+
+.chat-message-text {
+  float: right; }
