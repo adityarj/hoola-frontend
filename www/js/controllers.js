@@ -275,22 +275,35 @@ angular.module('starter.controllers', [])
 
     $scope.totalFlightTime = [];
 
-    $scope.timeCalculator = function (flights) {
-        var flightDuration = 0;
-        var earlierFlightDuration = null;
-        flights.forEach(function(flight) {
-            if (earlierFlightDuration) {
-                flightDuration+= flight.departs_at - earlierFlightDuration;
-            }
-            flightDuration+= flight.arrives_at.replace(':','') - flight.departs_at.replace(':',''); 
-            earlierFlightDuration = flight.arrives_at;
-        });
-        $scope.totalFlightTime.push(flightDuration);
-        return true;
-    };
+    $scope.bookFlight = function(flightDetails) {
 
-    $scope.bookFlight = function() {
-        //I will finalize flight and send to server, then update it back
+        var flight1 = flightDetails.itineraries[0].outbound.flights[0]
+
+        if (flightDetails.itineraries[0].outbound.flights[1]) {
+            var flight2 = flightDetails.itineraries[0].outbound.flights[1];
+            var flight_info = {
+                origin: flight1.origin.airport,
+                destination: flight2.destination.airport,
+                depart: new moment(flight1.departs_at.substr(11),'HH:mm'),
+                arrival: new moment(flight2.arrives_at.substr(11),'HH:mm'),
+                date: new moment($scope.Reservation.depart),
+                flight_num: flight1.marketing_airline+flight1.flight_number,
+            }
+        } else {
+            var flight_info = {
+                origin: flight1.origin.airport,
+                destination: flight1.destination.airport,
+                depart: new moment(flight1.departs_at.substr(11),'HH:mm'),
+                arrival: new moment(flight1.arrives_at.substr(11),'HH:mm'),
+                date: new moment($scope.Reservation.depart),
+                flight_num: flight1.marketing_airline+flight1.flight_number,
+            }
+        }
+
+        console.log(flight_info);
+
+        //Perform post request here, change params if needed
+        
     };
 })
  
