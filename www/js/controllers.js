@@ -38,7 +38,7 @@ angular.module('starter.controllers', [])
             $rootScope.header = response.headers()
             $rootScope.id = response.data.data.id
         console.log(response.headers());
-        $state.go('tab.chats') //to be edited later for main page.
+        $state.go('tab.listings') //to be edited later for main page.
         $scope.loggedIn = true
                     
         }), function (reject) {
@@ -48,7 +48,8 @@ angular.module('starter.controllers', [])
         }
     }
 
-    $scope.returnVisit = function (loginDetails) { //requires id and auth_token
+    $scope.returnVisit = function (loginDetails) { //requires id and auth_token not working yet
+        
         userServices.validateUser(loginDetails)
         .then(function (success){
             $scope.loggedIn = true
@@ -61,53 +62,24 @@ angular.module('starter.controllers', [])
             )
     }
 
-    $scope.logout = function (loginDetails) { //accesstoken, uid, client , figure out how to store these values client-side.
+    $scope.logout = function (loginDetails) { //accesstoken, uid, client , figure out how to store these values client-side. not working yet
         userServices.logout(loginDetails)
         .then(function (result) {
             $scope.loggedIn = false
             $scope.logoutMessage = "You have successfully logged out!"
+            $state.go('login')
         })
     }
 
 
-
-    //$scope.adder = function (email,start, end, city, attributes) {
-    //    queryServices.adder(email,start, end, city, attributes)
-    //    .then(function (result) {
-    //        $scope.addMessage = "Successfully added listing!"
-    //        //what do I do with this?
-    //    })
-    //}
-
-    //$scope.deleter = function (email) {
-    //    queryServices.deleter(email)
-    //    .then(function (result) {
-    //        $scope.deleteMessage = "Successfully deleted your listing"
-    //    })
-    //}
-
-    //$scope.fetcher = function () {
-    //    queryServices.fetcher()
-    //    .then(function (result) {
-    //        $scope.fetchMessage = "Successfully fetched data!"
-    //    })
-    //}
-
-    //$scope.similarer = function (city) {
-    //    queryServices.similarer(city)
-    //    .then(function (result) {
-    //        $scope.similarMessage = "Similar cities found!"
-    //    })
-    //}
-
     
 })
 
-.controller('ListingsCtrl', function (listingServices,$scope,$http,$rootScope) {
+.controller('ListingsCtrl', function (listingServices,$scope,$http,$rootScope,$state) {
     $scope.ListofListings = {}
     $scope.listingDetails = {}
-
-
+    $scope.PersonalListings = {}
+    $scope.listingDetails.id = $rootScope.id
     $scope.getMainList = function () {
         listingServices.getAllListings()
         .then(function (result) {
@@ -120,17 +92,18 @@ angular.module('starter.controllers', [])
 
         listingServices.getListing(listingDetails)
         .then(function (result) {
-            $scope.personalListing = result.data.data //check
+            $scope.PersonalListings = result.data //check
         })
     }
 
     $scope.createListing = function (listingDetails) {
         $scope.listingDetails.Date = Date.new
-        $scope.listingDetails.id = $rootScope.id
+        
         listingServices.createListing(listingDetails)
         .then(function(result){
             $scope.createMessage = "Successfully created new listing!"
             console.log("posted");
+            $scope.getMainList() //refresh listings
         }),
         function (failure) {
             alert("Failed to create a listing");
@@ -147,7 +120,10 @@ angular.module('starter.controllers', [])
         listingServices.updateListing(listingDetails)
         .then(function (result) {
             $scope.updateMessage = "Successfully updated your listing."
-        })
+        }),
+        function (failure) {
+            alert("Failed to update listing, check required fields!");
+        }
     }
 
     $scope.deleteListing = function (listingDetails) {
@@ -157,6 +133,11 @@ angular.module('starter.controllers', [])
         })
     }
     
+    $scope.changeTab = function (tab) {
+
+        $state.go(tab);
+    }
+
     $scope.getMainList()
 
 })

@@ -5,16 +5,11 @@
   The Friends service returns an array of friend data
 -->
 
-<ion-view view-title="Home">
+<ion-view view-title="{{listing.id}}">
   <ion-content class="padding">
-      <!--title: listingDetails.title,
-      destination: listingDetails.destination,
-      description: listingDetails.description,
-      departure: listingDetails.Date, //help with this pleaseee? Not sure if date format is correct.
-      user_id: listingDetails.id-->
 
     <form class="list list-inset" ng-submit="createListing(listingDetails)">
-        
+
         <md-content md-theme="docs-dark" layout-gt-sm="row" layout-padding>
             <div>
                 <md-input-container>
@@ -32,33 +27,24 @@
                     <input ng-model="listingDetails.description" type="text">
                 </md-input-container>
 
-                <!--<md-input-container>
-                    <label>Date</label>
-                    <input ng-model="listingDetails.Date" type="date">
-                </md-input-container>
-
-                <md-input-container>
-                    <label>id</label>
-                    <input ng-model="listingDetails.id" type="text">
-                </md-input-container>-->
-
-
             </div>
         </md-content>
         <md-button class="md-primary md-inkripple md-raised" md-colors="{background: 'light-green'}" type="submit">Create your own listing!</md-button>
     </form>
 
     <div>
-        <ion-item class="item-remove-animate item-icon-right" ng-repeat="listing in ListofListings" type="item-text-wrap" href="#/tab/home/{{listing.id}}">
-          Trip name: {{listing.title}}    <br />
-          Destination: {{listing.destination}} <br />
-          Description: {{listing.description}} <br />  
+        <div ng-repeat="personal in PersonalListings">
+          Trip name: {{personal.title}}    <br />
+          Destination: {{personal.destination}} <br />
+          Description: {{personal.description}} <br />  
             
-      </ion-item>
+      </div>
     </div>
-      <md-button class="md-primary md-inkripple md-raised" md-colors="{background: 'lime'}" ng-click="changeTab('register')">
-          Sign out
 
-      </md-button>
+      <div>
+          <md-button class="md-primary md-inkripple md-raised" md-colors="{background: 'lime'}" ng-click="changeTab('tabs.listings')">
+              Back to all the listings
+          </md-button>
+      </div>
   </ion-content>
 </ion-view>

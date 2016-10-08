@@ -111,7 +111,7 @@ angular.module('starter.services', [])
             method: 'DELETE',
             url: localHost + 'sign_out',
             data: {
-                "access-token": loginDetails.access-token, //... can't put access-token, had to use underscore. Don't know if will bug.
+                "access-token": loginDetails.access-token, //... can't put access-token
                 uid: loginDetails.uid, //technically on the database, uid and email have different fields but they actually have the same value of the user's email.
                 client: loginDetails.client
             }

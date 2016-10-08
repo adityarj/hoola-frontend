@@ -57,7 +57,17 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
         url: '/register',
         templateUrl: 'templates/register.html',
         controller: 'LoginCtrl'
-  })
+    })
+
+    .state('personal', {
+        url: '/home/:id',
+        views: {
+            'tab-listings': {
+                templateUrl: 'templates/personal-listing.html',
+                controller: 'ListingsCtrl'
+            }
+        }
+    })
 
   .state('tab.listings',{
       url: '/home',
