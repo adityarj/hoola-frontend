@@ -36,7 +36,7 @@ angular.module('starter.controllers', [])
         userServices.login(loginDetails)
         .then(function(response) {
             $rootScope.header = response.headers()
-            $rootScope.id = response.data.data.id
+            $rootScope.data = response.data.data
         console.log(response.headers());
         $state.go('tab.listings') //to be edited later for main page.
         $scope.loggedIn = true
@@ -79,7 +79,7 @@ angular.module('starter.controllers', [])
     $scope.ListofListings = {}
     $scope.listingDetails = {}
     $scope.PersonalListings = {}
-    $scope.listingDetails.id = $rootScope.id
+    $scope.listingDetails.id = $rootScope.data.id
     $scope.getMainList = function () {
         listingServices.getAllListings()
         .then(function (result) {
@@ -100,7 +100,8 @@ angular.module('starter.controllers', [])
         $scope.listingDetails.Date = Date.new
         
         listingServices.createListing(listingDetails)
-        .then(function(result){
+        .then(function (result) {
+            $rootScope.listingID = result.data.data.id
             $scope.createMessage = "Successfully created new listing!"
             console.log("posted");
             $scope.getMainList() //refresh listings
@@ -211,7 +212,7 @@ angular.module('starter.controllers', [])
 .controller('StayController', function ($scope,$http) {
     //Replace this initialization with global scope values once completed
     $scope.disabledStatus = false;
-
+    $scope.hotelBookingDetails.id = $rootScope.listingID
     $scope.Reservation = {
         people: 2,
         city: 'Tokyo',
@@ -243,7 +244,7 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('FlightController',function($scope,$http) {
+.controller('FlightController',function($scope,$http,flightBookingService) {
 
     $scope.airports = {
         SIN: {
@@ -365,15 +366,27 @@ angular.module('starter.controllers', [])
             var flight_info = {
                 origin: flight1.origin.airport,
                 destination: flight1.destination.airport,
-                depart: new moment(flight1.departs_at.substr(11),'HH:mm'),
-                arrival: new moment(flight1.arrives_at.substr(11),'HH:mm'),
-                date: new moment($scope.Reservation.depart),
-                flight_num: flight1.marketing_airline+flight1.flight_number,
+                departure_time: new moment(flight1.departs_at.substr(11),'HH:mm'),
+                arrival_time: new moment(flight1.arrives_at.substr(11),'HH:mm'),
+                flight_date: new moment($scope.Reservation.depart),
+                flight_number: flight1.marketing_airline+flight1.flight_number,
             }
         }
 
         console.log(flight_info);
 
+        flightBookingService.createBooking(flight_info);
+
+
+        //listing: flightBookingDetails.listing,
+        //origin: flightBookingDetails.origin,
+        //destination: flightBookingDetails.destination,
+        //flight_number: flightBookingDetails.flight_number,
+        //flight_date: flightBookingDetails.flight_date,
+        //price: flightBookingDetails.price
+        
+
+        
         //Perform post request here, change params if needed
         
     };
